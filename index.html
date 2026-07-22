@@ -565,6 +565,17 @@
   padding-right:16px;
 }
 
+.map-image{
+  width:100%;
+  max-width:340px;
+  height:auto;
+
+  border-radius:10px;
+
+  box-shadow:
+    0 0 20px rgba(255,255,255,0.8);
+}
+
 .timeline-event{
   padding-left:20px;
 
@@ -754,18 +765,110 @@
   </footer>
 
 </div>
-  <!-- NA SVATBĚ -->
-  <div class="view" id="view-na">
-    <button class="backbtn" onclick="go('home')">← Zpět</button>
-    <div class="surprise">
-      <div class="dots">
-        <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
-        <div class="dot d4"></div><div class="dot d5"></div><div class="dot d6"></div>
-      </div>
-      <h2>Nechte se<br>překvapit</h2>
-      <p>Tahle část se právě chystá. Brzy tu najdete víc.</p>
-    </div>
+
+<!-- FOTKY INFO -->
+<div class="view" id="view-fotky">
+
+  <button class="backbtn" onclick="go('na')">← Zpět</button>
+
+  <div class="subtitle">Fotky info</div>
+
+  <div class="route-intro">
+
+    Na svatbě bude skvělá fotografka, která se bude snažit zachytit všechny důležité momenty.
+    Chceme, abyste tyto okamžiky prožili s námi a beze stresu správně nastaveného foťáku.
+
+    <br><br>
+
+    Pokud se vám ale přeci podaří zachytit skvělé momentky a fotky,
+    sdílejte je s námi na níže uvedeném odkazu:
+
+    <br><br>
+
+    <a href="https://photos.app.goo.gl/kHPrToNWSzXLn2uy9"
+       target="_blank"
+       style="color:var(--tan); font-weight:700;">
+      Otevřít sdílené album
+    </a>
+
   </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
+
+
+<!-- MAPKA AREÁLU -->
+<div class="view" id="view-mapka">
+
+  <button class="backbtn" onclick="go('na')">← Zpět</button>
+
+  <div class="subtitle">Mapka areálu</div>
+
+  <div style="text-align:center;">
+
+    <img
+      src="img/mapka.png"
+      alt="Mapka areálu"
+      class="program-image">
+
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
+
+
+<!-- NÁPOJOVÝ LÍSTEK -->
+<div class="view" id="view-napoje">
+
+  <button class="backbtn" onclick="go('na')">← Zpět</button>
+
+  <div class="surprise">
+    <div class="dots">
+      <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
+      <div class="dot d4"></div><div class="dot d5"></div><div class="dot d6"></div>
+    </div>
+
+    <h2>Nechte se<br>překvapit</h2>
+
+    <p>Tahle část se právě chystá. Brzy tu najdete víc.</p>
+  </div>
+
+</div>
+
+  <!-- NA SVATBĚ -->
+<div class="view" id="view-na">
+
+  <button class="backbtn" onclick="go('home')">← Zpět</button>
+
+  <div class="subtitle">Svatba</div>
+
+  <div class="nav-stack">
+
+    <button class="nav-btn" onclick="go('fotky')">
+      Fotky info
+    </button>
+
+    <button class="nav-btn" onclick="go('mapka')">
+      Mapka areálu
+    </button>
+
+    <button class="nav-btn" onclick="go('napoje')">
+      Nápojový lístek
+    </button>
+
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
 
   <!-- PO SVATBĚ -->
   <div class="view" id="view-po">
