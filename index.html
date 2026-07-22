@@ -244,7 +244,9 @@
     margin-top:auto;
     padding-top:24px;
   }
-  .route-intro{
+  /* KUDY NA SVATBU */
+
+.route-intro{
   font-family:'Inter',sans-serif;
   font-size:14px;
   line-height:1.7;
@@ -268,16 +270,16 @@
   border:1.5px solid var(--card-border);
   border-radius:10px;
 
+  background:rgba(255,255,255,0.45);
+
   text-decoration:none;
   color:var(--ink);
-
-  background:rgba(255,255,255,0.45);
 
   box-shadow:
     0 0 20px rgba(255,255,255,0.9),
     0 0 35px rgba(255,255,255,0.55);
 
-  transition:0.2s ease;
+  transition:all 0.2s ease;
 }
 
 .route-card:hover{
@@ -285,8 +287,8 @@
 }
 
 .route-card img{
-  width:36px;
-  height:36px;
+  width:42px;
+  height:42px;
   object-fit:contain;
 }
 
@@ -548,24 +550,39 @@
 
   <div class="route-intro">
     Níže najdete bod na mapě svatebního místa.
-    Stačí si vybrat svou oblíbenou navigaci a nechat se dovést až na místo.
+    Stačí si vybrat navigaci, kterou běžně používáte.
   </div>
 
   <div class="route-links">
 
-    <a class="route-card" href="https://mapy.com/s/logunetome" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Mapy.cz_icon.png" alt="Mapy.cz">
+    <a class="route-card"
+       href="https://mapy.com/s/logunetome"
+       target="_blank">
+
+      <img src="img/mapycz.png" alt="Mapy.cz">
+
       <span>Mapy.cz</span>
+
     </a>
 
-    <a class="route-card" href="https://maps.app.goo.gl/NCYqGnKk6yoZVZ298" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps">
+    <a class="route-card"
+       href="https://maps.app.goo.gl/NCYqGnKk6yoZVZ298"
+       target="_blank">
+
+      <img src="img/googlemaps.png" alt="Google Maps">
+
       <span>Google Maps</span>
+
     </a>
 
-    <a class="route-card" href="https://ul.waze.com/ul?place=ChIJAX1T2BFLCUcRiEOu3cvJFeM&ll=50.64713280%2C15.07306480&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Waze.svg" alt="Waze">
+    <a class="route-card"
+       href="https://ul.waze.com/ul?place=ChIJAX1T2BFLCUcRiEOu3cvJFeM&ll=50.64713280%2C15.07306480&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location"
+       target="_blank">
+
+      <img src="img/waze.png" alt="Waze">
+
       <span>Waze</span>
+
     </a>
 
   </div>
