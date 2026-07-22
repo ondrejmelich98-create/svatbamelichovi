@@ -521,11 +521,9 @@
 /* PROGRAM */
 
 .program-wrapper{
-  flex:1;
-
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
 }
 
 .program-image{
@@ -534,9 +532,45 @@
   height:auto;
 
   border-radius:10px;
+  margin-bottom:30px;
 
   box-shadow:
     0 0 20px rgba(255,255,255,0.8);
+}
+
+.timeline{
+  width:100%;
+}
+
+.timeline-row{
+  display:grid;
+  grid-template-columns:95px 1fr;
+
+  align-items:center;
+
+  padding:12px 0;
+}
+
+.timeline-time{
+  font-family:'Inter',sans-serif;
+  font-weight:700;
+  font-size:18px;
+
+  color:var(--tan);
+
+  border-right:1px solid var(--card-border);
+
+  padding-right:16px;
+}
+
+.timeline-event{
+  padding-left:20px;
+
+  font-family:'Inter',sans-serif;
+  font-weight:500;
+
+  font-size:18px;
+  color:var(--ink);
 }
 </style>
 </head>
@@ -672,13 +706,57 @@
 
   <div class="program-wrapper">
 
-    <img
-      src="img/program.png"
-      alt="Program svatby"
-      class="program-image"
-    >
+  <img
+    src="img/program.png"
+    alt="Program svatby"
+    class="program-image"
+  >
+
+  <div class="timeline">
+
+    <div class="timeline-row">
+      <div class="timeline-time">10:00</div>
+      <div class="timeline-event">PŘÍCHOD HOSTŮ</div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-time">11:00</div>
+      <div class="timeline-event">SVATEBNÍ OBŘAD</div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-time">11:30</div>
+      <div class="timeline-event">SPOLEČNÉ FOCENÍ</div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-time">12:30</div>
+      <div class="timeline-event">OBĚD</div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-time">13:30</div>
+      <div class="timeline-event">KRÁJENÍ DORTU</div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-time">15:00</div>
+      <div class="timeline-event">PRVNÍ TANEC</div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-time">15:30</div>
+      <div class="timeline-event">ZÁBAVA</div>
+    </div>
+
+    <div class="timeline-row">
+      <div class="timeline-time">18:00</div>
+      <div class="timeline-event">VEČERNÍ OBČERSTVENÍ</div>
+    </div>
 
   </div>
+
+</div>
 
   <footer class="mini">
     Tereza &amp; Ondřej — 2026
