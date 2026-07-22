@@ -252,6 +252,7 @@
   line-height:1.7;
   color:var(--ink);
   margin-bottom:24px;
+  text-align:center;
 }
 
 .route-links{
@@ -496,6 +497,47 @@
     color:var(--ink);
     cursor:pointer;
   }
+  /* CO SI OBLÉCT */
+
+.dress-palette{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:12px;
+}
+
+.palette-color{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.8);
+
+  box-shadow:
+    0 0 15px rgba(255,255,255,0.9),
+    0 0 30px rgba(255,255,255,0.5);
+}
+
+/* PROGRAM */
+
+.program-wrapper{
+  flex:1;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.program-image{
+  width:100%;
+  max-width:320px;
+  height:auto;
+
+  border-radius:10px;
+
+  box-shadow:
+    0 0 20px rgba(255,255,255,0.8);
+}
 </style>
 </head>
 <body>
@@ -536,8 +578,8 @@
     <div class="subtitle">Před<br>svatbou</div>
     <div class="nav-stack">
       <button class="nav-btn" onclick="go('kudy')">Kudy na svatbu</button>
-      <button class="nav-btn" onclick="showSurprise('pred')">Co si obléct</button>
-      <button class="nav-btn" onclick="showSurprise('pred')">Program</button>
+      <button class="nav-btn" onclick="go('obleceni')">Co si obléct</button>
+      <button class="nav-btn" onclick="go('program')">Program</button>
     </div>
     <footer class="mini">Tereza &amp; Ondřej — 2026</footer>
   </div>
@@ -584,6 +626,79 @@
       <span>Waze</span>
 
     </a>
+
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+</div>
+<!-- CO SI OBLÉCT -->
+<div class="view" id="view-obleceni">
+
+  <button class="backbtn" onclick="go('pred')">← Zpět</button>
+
+  <div class="subtitle">Co si<br>obléct</div>
+
+  <div class="route-intro">
+    Budeme rádi za ladění do odstínů naší palety.<br><br>
+
+    Volba outfitu je však zcela na vás – doražte v tom,
+    v čem je vám nejlépe.
+  </div>
+
+  <div class="dress-palette">
+
+    <div class="palette-color" style="background:#F0C43D"></div>
+    <div class="palette-color" style="background:#E36225"></div>
+    <div class="palette-color" style="background:#E85C88"></div>
+    <div class="palette-color" style="background:#A15FC9"></div>
+    <div class="palette-color" style="background:#6FB3E0"></div>
+    <div class="palette-color" style="background:#8FC244"></div>
+
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
+<!-- PROGRAM -->
+<div class="view" id="view-program">
+
+  <button class="backbtn" onclick="go('pred')">← Zpět</button>
+
+  <div class="subtitle">Program</div>
+
+  <div class="program-wrapper">
+
+    <img
+      src="img/program.png"
+      alt="Program svatby"
+      class="program-image"
+    >
+
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
+  <!-- PROGRAM -->
+<div class="view" id="view-program">
+
+  <button class="backbtn" onclick="go('pred')">← Zpět</button>
+
+  <div class="subtitle">Program</div>
+
+  <div class="program-wrapper">
+
+    <img
+      src="img/program.png"
+      alt="Program svatby"
+      class="program-image"
+    >
 
   </div>
 
