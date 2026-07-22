@@ -73,23 +73,80 @@
     justify-content:center;
     gap:14px;
   }
-  .nav-btn{
-    display:block;
-    width:100%;
-    padding:18px 16px;
-    background:transparent;
-    border:1.5px solid var(--card-border);
-    border-radius:10px;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:16px;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--ink);
-    text-align:center;
-    cursor:pointer;
-    -webkit-tap-highlight-color:transparent;
-  }
+.nav-btn{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  width:100%;
+  min-height:76px;
+
+  padding:18px 16px;
+
+  background:rgba(255,255,255,0.45);
+
+  border:1.5px solid var(--card-border);
+  border-radius:10px;
+
+  font-family:'Inter',sans-serif;
+  font-weight:800;
+  font-size:16px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--ink);
+
+  text-align:center;
+  cursor:pointer;
+
+  -webkit-tap-highlight-color:transparent;
+
+  box-shadow:
+    0 0 20px rgba(255,255,255,0.9),
+    0 0 35px rgba(255,255,255,0.55);
+}
+.nav-btn-bonus{
+  min-height:95px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.70),
+      rgba(255,255,255,0.45)
+    );
+
+  box-shadow:
+    0 0 22px rgba(255,255,255,0.95),
+    0 0 40px rgba(255,255,255,0.60);
+}
+
+.bonus-title{
+  display:block;
+
+  font-family:'Inter',sans-serif;
+  font-weight:800;
+  font-size:20px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+
+  color:var(--tan);
+}
+
+.bonus-subtitle{
+  display:block;
+
+  margin-top:6px;
+
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:500;
+
+  font-size:15px;
+  letter-spacing:0;
+
+  text-transform:none;
+  color:var(--ink);
+}
   .nav-btn:active{ background:var(--tan-fill); border-color:var(--tan); }
   .nav-btn .cap{
     display:block;
@@ -398,12 +455,24 @@
       <h1>Svatba</h1>
       <div class="date">12. září 2026</div>
     </div>
-    <div class="nav-stack">
-      <button class="nav-btn" onclick="go('pred')">Před svatbou<span class="cap">Dymešová a Melich</span></button>
-      <button class="nav-btn" onclick="go('na')">Svatba<span class="cap">Obřad</span></button>
-      <button class="nav-btn" onclick="go('po')">Po svatbě<span class="cap">Melichová a Melich</span></button>
-      <button class="nav-btn" onclick="openQuiz()">Jak moc dobře znáš novomanžele?<span class="cap">Kvíz</span></button>
-    </div>
+<div class="nav-stack">
+  <button class="nav-btn" onclick="go('pred')">
+    Před svatbou
+  </button>
+
+  <button class="nav-btn" onclick="go('na')">
+    Svatba
+  </button>
+
+  <button class="nav-btn" onclick="go('po')">
+    Po svatbě
+  </button>
+
+  <button class="nav-btn nav-btn-bonus" onclick="openQuiz()">
+    <span class="bonus-title">Bonus</span>
+    <span class="bonus-subtitle">Jak moc dobře znáš novomanžele?</span>
+  </button>
+</div>
     <div class="signature">Tereza + Ondřej</div>
     <div class="datebar">12 / 09 / 2026 · Vrchovina 30, Sychrov</div>
   </div>
