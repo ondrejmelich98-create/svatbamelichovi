@@ -200,7 +200,15 @@
     text-align:center;
     margin-top:18px;
 }
-
+.weather-title{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--tan);
+    margin-bottom:10px;
+}
 .weather-icon{
     font-size:28px;
     line-height:1;
@@ -700,6 +708,10 @@
     <div class="signature">Tereza + Ondřej</div>
     <div class="weather" id="weather">
 
+  <div class="weather-title" id="weatherTitle">
+    Předpověď počasí v místě svatby
+  </div>
+
   <div class="weather-icon" id="weatherIcon">
     🌤️
   </div>
@@ -1027,6 +1039,10 @@
 
   function updateCountdown(){
     const weddingDate = new Date('2026-07-26T11:00:00');
+    const isWeddingDay =
+  now.getFullYear() === weddingDate.getFullYear() &&
+  now.getMonth() === weddingDate.getMonth() &&
+  now.getDate() === weddingDate.getDate();
     const now = new Date();
     const diffMs = weddingDate - now;
     const el = document.getElementById('countdown');
@@ -1055,10 +1071,13 @@ async function updateWeather(){
   const info = document.getElementById('weatherInfo');
   const temp = document.getElementById('weatherTemp');
   const rain = document.getElementById('weatherRain');
-
+  const title = document.getElementById('weatherTitle');
 
   // Více než 7 dní před svatbou
   if(diffDays > 7){
+
+    title.innerHTML =
+      "Předpověď počasí v místě svatby";
 
     icon.innerHTML = "🌤️";
 
@@ -1068,7 +1087,7 @@ async function updateWeather(){
       "7 dní před svatbou.";
 
     return;
-  }
+}
 
 
   // GPS souřadnice Sychrova
@@ -1084,7 +1103,17 @@ async function updateWeather(){
 
     const data = await response.json();
 
+    if(isWeddingDay){
 
+  title.innerHTML =
+    "Aktuální počasí v místě svatby";
+
+}else{
+
+  title.innerHTML =
+    "Předpověď počasí v místě svatby";
+
+}
     const temperature =
       Math.round(data.daily.temperature_2m_max[0]);
 
