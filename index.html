@@ -57,7 +57,7 @@
     text-transform:uppercase;
     line-height:1;
   }
-  .brand .date{
+    .brand .date{
     margin-top:10px;
     font-family:'Fraunces', serif;
     font-weight:500;
@@ -65,6 +65,24 @@
     font-size:19px;
     color:var(--tan);
   }
+  .countdown{
+    margin-top:16px;
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .countdown .num{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-style:normal;
+    font-size:17px;
+    color:var(--tan);
+    margin-right:5px;
+  }
+
 
   .nav-stack{
     flex:1;
@@ -621,11 +639,13 @@
 <div class="card">
 
   <!-- HOME -->
-  <div class="view active" id="view-home">
+    <div class="view active" id="view-home">
     <div class="brand">
       <h1>Svatba</h1>
       <div class="date">12. září 2026</div>
+      <div class="countdown" id="countdown"></div>
     </div>
+
 <div class="nav-stack">
   <button class="nav-btn" onclick="go('pred')">
     Před svatbou
@@ -944,11 +964,29 @@
 </div>
 
 <script>
-  function go(id){
+    function go(id){
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + id).classList.add('active');
     window.scrollTo(0,0);
   }
+
+  function updateCountdown(){
+    const weddingDate = new Date('2026-09-12T11:00:00');
+    const now = new Date();
+    const diffMs = weddingDate - now;
+    const el = document.getElementById('countdown');
+    if(!el) return;
+
+    if(diffMs <= 0){
+      el.innerHTML = `Ať žijí novomanželé!`;
+      return;
+    }
+    const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    const label = days === 1 ? 'den' : (days >= 2 && days <= 4 ? 'dny' : 'dní');
+    el.innerHTML = `<span class="num">${days}</span>${label} do svatby`;
+  }
+  updateCountdown();
+
   function showSurprise(from){ go('surprise-' + from); }
 
   /* ---------- QUIZ ---------- */
