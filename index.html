@@ -483,7 +483,7 @@
     color:var(--tan);
     letter-spacing:0.04em;
   }
-  .retry-btn{
+.retry-btn{
     margin-top:10px;
     padding:14px 26px;
     background:transparent;
@@ -496,6 +496,35 @@
     text-transform:uppercase;
     color:var(--ink);
     cursor:pointer;
+  }
+  .result-topics-title{
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--tan);
+    text-align:center;
+    margin-top:14px;
+    margin-bottom:2px;
+  }
+  .result-topics{
+    margin-top:2px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    text-align:left;
+  }
+  .topic-item{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    line-height:1.5;
+    color:var(--ink);
+    padding:10px 12px;
+    border:1px solid var(--card-border);
+    border-radius:8px;
+    background:rgba(255,255,255,0.4);
   }
   /* CO SI OBLÉCT */
 
@@ -923,27 +952,45 @@
   function showSurprise(from){ go('surprise-' + from); }
 
   /* ---------- QUIZ ---------- */
-  const questions = [
-    {q:"Kolik bude novomanželům v den svatby dohromady let?", opts:["52","55","50","49"], correct:0},
-    {q:"Kde se novomanželé poznali?", opts:["V baru","Na střední škole","Na Instagramu","Na koupališti"], correct:1},
-    {q:"Jaké mají nejvyšší vzdělání?", opts:["Oba mají maturitu","Ondra má titul Ing. a Terka Mgr.","Ondra má titul Mgr. a Terka má maturitu","Oba mají titul Ing."], correct:3},
-    {q:"Čím nejraději vyplňují svůj volný den?", opts:["U seriálů na Netflixu","Jízdou na silničce","Jdou si zaběhat","Uklízením"], correct:1},
-    {q:"Kde se narodil ženich?", opts:["Lomnice","Liberec","Turnov","Mladá Boleslav"], correct:2},
-    {q:"Jaký je ženichův skrytý talent?", opts:["Umí si dát nohu za hlavu","Umí tleskat jednou rukou","Umí si vykloubit rameno","Stojí na jedné noze dél jak hodinu"], correct:1},
-    {q:"Jak se jmenuje vesnice, kde nevěsta vyrůstala?", opts:["Dolní Kvítkovice","Dolní Vítkovice","Dolní Vítkov","Dolní Karlovice"], correct:2},
-    {q:"Jakou střední školu vystudovala nevěsta?", opts:["Textilní","Průmyslovou strojní a elektrotechnickou","Uměleckou","Zdravotnickou"], correct:1},
-    {q:"Kde ženich požádal nevěstu o ruku?", opts:["Schafberg v Rakousku","Hlavatice u Turnova","V Řecku na pláži","Na Sychrově"], correct:0},
-    {q:"Kolik je počet sourozenců ženicha vynásobené počtem sourozenců nevěsty?", opts:["4","1","3","2"], correct:3},
-    {q:"Kde momentálně novomanželé bydlí?", opts:["V Turnově u náměstí","V Turnově v Ohrazenicích","V Liberci v Harcově","V Mladé Boleslavi v Kosmonosích"], correct:0},
-    {q:"Jak se nazývá pracovní pozice ženicha?", opts:["Vývojový specialista pneumatik","Koordinátor body systému","Odborný koordinátor vibroakustiky vozu","Design vozu"], correct:2},
-    {q:"Jak se nazývá pracovní pozice nevěsty?", opts:["Biomedicínský technik","Radiologický asistent","Biomedicínský inženýr","Všeobecná sestra"], correct:2},
-    {q:"Jaké modely aut vlastní?", opts:["VW Golf a Škoda Octavia","Škoda Fabia","Škoda Scala","Škoda Rapid a Škoda Scala"], correct:3},
-    {q:"Který z těchto faktů je o ženichovi pravdivý?", opts:["Vlastní byt v Německu","Chybí mu menisky v obou kolenech","Má tři bradavky","Nesnáší lasagne"], correct:1},
-    {q:"Který z těchto faktů o nevěstě je pravdivý?", opts:["Má na těle vytetovanou lilii","Miluje houby","Je extrovert","Ráda se hádá"], correct:0},
-    {q:"Kolik lidí je pozváno na svatbu?", opts:["Do 60","Do 40","Do 80","Do 100"], correct:0},
-    {q:"Kterou z těchto aktivit nevolí novomanželé pro své rande?", opts:["Kafe","Sport","Posezení v baru","Netflix"], correct:2},
-    {q:"Jak dlouho spolu novomanželé chodili před svatbou?", opts:["10 let přesně","5 let","Do svatby se neznali","Téměř 9 let"], correct:3}
+const questions = [
+    {q:"Kolik bude novomanželům v den svatby dohromady let?", opts:["52","55","50","49"], correct:0, topic:"vek"},
+    {q:"Kde se novomanželé poznali?", opts:["V baru","Na střední škole","Na Instagramu","Na koupališti"], correct:1, topic:"seznameni"},
+    {q:"Jaké mají nejvyšší vzdělání?", opts:["Oba mají maturitu","Ondra má titul Ing. a Terka Mgr.","Ondra má titul Mgr. a Terka má maturitu","Oba mají titul Ing."], correct:3, topic:"vzdelani"},
+    {q:"Čím nejraději vyplňují svůj volný den?", opts:["U seriálů na Netflixu","Jízdou na silničce","Jdou si zaběhat","Uklízením"], correct:1, topic:"volny_cas"},
+    {q:"Kde se narodil ženich?", opts:["Lomnice","Liberec","Turnov","Mladá Boleslav"], correct:2, topic:"puvod"},
+    {q:"Jaký je ženichův skrytý talent?", opts:["Umí si dát nohu za hlavu","Umí tleskat jednou rukou","Umí si vykloubit rameno","Stojí na jedné noze dél jak hodinu"], correct:1, topic:"talent"},
+    {q:"Jak se jmenuje vesnice, kde nevěsta vyrůstala?", opts:["Dolní Kvítkovice","Dolní Vítkovice","Dolní Vítkov","Dolní Karlovice"], correct:2, topic:"puvod"},
+    {q:"Jakou střední školu vystudovala nevěsta?", opts:["Textilní","Průmyslovou strojní a elektrotechnickou","Uměleckou","Zdravotnickou"], correct:1, topic:"vzdelani"},
+    {q:"Kde ženich požádal nevěstu o ruku?", opts:["Schafberg v Rakousku","Hlavatice u Turnova","V Řecku na pláži","Na Sychrově"], correct:0, topic:"zasnoubeni"},
+    {q:"Kolik je počet sourozenců ženicha vynásobené počtem sourozenců nevěsty?", opts:["4","1","3","2"], correct:3, topic:"rodina"},
+    {q:"Kde momentálně novomanželé bydlí?", opts:["V Turnově u náměstí","V Turnově v Ohrazenicích","V Liberci v Harcově","V Mladé Boleslavi v Kosmonosích"], correct:0, topic:"bydleni"},
+    {q:"Jak se nazývá pracovní pozice ženicha?", opts:["Vývojový specialista pneumatik","Koordinátor body systému","Odborný koordinátor vibroakustiky vozu","Design vozu"], correct:2, topic:"prace"},
+    {q:"Jak se nazývá pracovní pozice nevěsty?", opts:["Biomedicínský technik","Radiologický asistent","Biomedicínský inženýr","Všeobecná sestra"], correct:2, topic:"prace"},
+    {q:"Jaké modely aut vlastní?", opts:["VW Golf a Škoda Octavia","Škoda Fabia","Škoda Scala","Škoda Rapid a Škoda Scala"], correct:3, topic:"auta"},
+    {q:"Který z těchto faktů je o ženichovi pravdivý?", opts:["Vlastní byt v Německu","Chybí mu menisky v obou kolenech","Má tři bradavky","Nesnáší lasagne"], correct:1, topic:"zajimavosti"},
+    {q:"Který z těchto faktů o nevěstě je pravdivý?", opts:["Má na těle vytetovanou lilii","Miluje houby","Je extrovert","Ráda se hádá"], correct:0, topic:"zajimavosti"},
+    {q:"Kolik lidí je pozváno na svatbu?", opts:["Do 60","Do 40","Do 80","Do 100"], correct:0, topic:"svatba_detaily"},
+    {q:"Kterou z těchto aktivit nevolí novomanželé pro své rande?", opts:["Kafe","Sport","Posezení v baru","Netflix"], correct:2, topic:"rande"},
+    {q:"Jak dlouho spolu novomanželé chodili před svatbou?", opts:["10 let přesně","5 let","Do svatby se neznali","Téměř 9 let"], correct:3, topic:"vztah"}
   ];
+
+  const topicMessages = {
+    vek: "Nevíte přesně, kolik jim dohromady je let – zeptejte se, jak berou blížící se kulatiny.",
+    seznameni: "Jak se vlastně poznali, vám ještě není úplně jasné – nechte si vyprávět celý příběh.",
+    vzdelani: "Co všechno vystudovali, byste asi netipli – popovídejte si o jejich studentských letech.",
+    volny_cas: "Jak nejradši tráví volný čas, vás možná překvapí – zeptejte se, co je aktuálně baví.",
+    puvod: "Odkud přesně pocházejí a kde vyrůstali, by stálo za doptání.",
+    talent: "Jejich skrytý talent vás určitě překvapí – nechte si ho předvést naživo.",
+    zasnoubeni: "Příběh zásnub je skvělé téma k rozjezdu řeči.",
+    rodina: "Kolik mají sourozenců a jak si s nimi rozumí, je fajn otázka na později.",
+    bydleni: "Kde teď bydlí a jak si tam zvykli, je dobré téma k popovídání.",
+    prace: "Čím se přesně živí, vám ještě není úplně jasné – nechte si o práci povyprávět.",
+    auta: "Jaká auta vlastně jezdí, byste asi netipli – zeptejte se, co jim vyhovuje.",
+    zajimavosti: "Nějaké zajímavosti o nich vám unikly – vyptejte se na drobnosti, co o sobě ještě neřekli.",
+    svatba_detaily: "Detaily kolem organizace svatby jsou skvělé téma na drby.",
+    rande: "Co spolu rádi dělají na rande, byste asi neuhodli – zeptejte se, jak tráví společný čas.",
+    vztah: "Jak dlouho spolu vlastně chodili, je fajn otázka k zavzpomínání."
+  };
 
   let answers = new Array(questions.length).fill(null);
   let current = 0;
@@ -996,11 +1043,18 @@
   function nextQ(){ if(current<questions.length-1){ current++; renderQuiz(); } }
   function jumpTo(i){ current = i; renderQuiz(); }
 
-  function submitQuiz(){
+function submitQuiz(){
     let score = 0;
-    questions.forEach((q, i) => { if(answers[i] === q.correct) score++; });
+    let wrongTopics = [];
+    questions.forEach((q, i) => {
+      if(answers[i] === q.correct){
+        score++;
+      } else if(!wrongTopics.includes(q.topic)){
+        wrongTopics.push(q.topic);
+      }
+    });
     const percent = Math.round((score/questions.length)*100);
-    renderResult(percent);
+    renderResult(percent, wrongTopics);
   }
 
   function scoreColor(percent){
@@ -1016,9 +1070,18 @@
     return "Je vůbec něco, co o nich nevíte?";
   }
 
-  function renderResult(percent){
+function renderResult(percent, wrongTopics){
     const root = document.getElementById('quizRoot');
     const color = scoreColor(percent);
+
+    const topicsToShow = (wrongTopics || []).slice(0, 4);
+    const topicsHtml = topicsToShow.length ? `
+      <div class="result-topics-title">O čem si popovídat</div>
+      <div class="result-topics">
+        ${topicsToShow.map(t => `<div class="topic-item">${topicMessages[t]}</div>`).join('')}
+      </div>
+    ` : '';
+
     root.innerHTML = `
       <div class="result">
         <div class="result-badge" style="background:${color}">
@@ -1027,6 +1090,7 @@
         </div>
         <h2>${scoreMessage(percent)}</h2>
         <div class="sub">Znáte novomanžele z ${percent} %</div>
+        ${topicsHtml}
         <button class="retry-btn" onclick="retryQuiz()">Opakovat test</button>
 
 <div class="route-intro" style="margin-top:20px;">
