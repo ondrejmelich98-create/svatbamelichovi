@@ -716,17 +716,7 @@
 
 </div>
 
-  <div class="weather-icon" id="weatherIcon">
-    🌤️
-  </div>
 
-  <div class="weather-info" id="weatherInfo">
-    Předpověď počasí<br>
-    bude dostupná<br>
-    7 dní před svatbou.
-  </div>
-
-</div>
   </div>
 
   <!-- PŘED SVATBOU submenu -->
@@ -1036,7 +1026,7 @@
   }
 
   function updateCountdown(){
-    const weddingDate = new Date('2026-09-12T11:00:00');
+    const weddingDate = new Date('2026-07-26T11:00:00');
     const now = new Date();
     const diffMs = weddingDate - now;
     const el = document.getElementById('countdown');
@@ -1053,7 +1043,7 @@
   updateCountdown();
 async function updateWeather(){
 
-  const weddingDate = new Date('2026-09-12T11:00:00');
+  const weddingDate = new Date('2026-07-26T11:00:00');
   const now = new Date();
 
   const diffDays = Math.ceil(
