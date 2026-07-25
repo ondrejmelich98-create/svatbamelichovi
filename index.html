@@ -606,10 +606,6 @@
     Svatba
   </button>
 
-  <button class="nav-btn" onclick="go('po')">
-    Po svatbě
-  </button>
-
   <button class="nav-btn nav-btn-bonus" onclick="openQuiz()">
     <span class="bonus-title">Bonusový kvíz</span>
     <span class="bonus-subtitle">Jak moc dobře znáš novomanžele?</span>
@@ -796,7 +792,32 @@
   </footer>
 
 </div>
+<!-- ODVOZ ZE SVATBY -->
+<div class="view" id="view-odvoz">
 
+  <button class="backbtn" onclick="go('na')">← Zpět</button>
+
+  <div class="subtitle">Odvoz ze svatby</div>
+
+  <div class="route-intro">
+
+    Ať si můžete svatební den užít naplno, zajistili jsme pro vás odvoz domů.
+
+    <br><br>
+
+    Pokud budete chtít odvézt, kontaktujte prosím našeho řidiče na telefonním čísle:
+
+    <br><br>
+
+    <span style="color:var(--tan); font-weight:700;">📞 +420 XXX XXX XXX</span>
+
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
 
 <!-- MAPKA AREÁLU -->
 <div class="view" id="view-mapka">
@@ -860,6 +881,10 @@
       Nápojový lístek
     </button>
 
+    <button class="nav-btn" onclick="go('odvoz')">
+      Odvoz ze svatby
+    </button>
+    
   </div>
 
   <footer class="mini">
@@ -867,19 +892,6 @@
   </footer>
 
 </div>
-
-  <!-- PO SVATBĚ -->
-  <div class="view" id="view-po">
-    <button class="backbtn" onclick="go('home')">← Zpět</button>
-    <div class="surprise">
-      <div class="dots">
-        <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
-        <div class="dot d4"></div><div class="dot d5"></div><div class="dot d6"></div>
-      </div>
-      <h2>Nechte se<br>překvapit</h2>
-      <p>Tahle část se právě chystá. Brzy tu najdete víc.</p>
-    </div>
-  </div>
 
   <!-- SURPRISE for "před svatbou" sub-items -->
   <div class="view" id="view-surprise-pred">
