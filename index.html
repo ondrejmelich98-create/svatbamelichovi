@@ -590,6 +590,129 @@
     border-radius:8px;
     background:rgba(255,255,255,0.4);
   }
+
+  /* SHARE BUTTON */
+  .share-btn{
+    margin-top:18px;
+    width:100%;
+    padding:19px 16px;
+    background:linear-gradient(180deg, #B79768, var(--tan));
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:16px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    box-shadow:
+      0 6px 18px rgba(166,136,95,0.45),
+      0 0 30px rgba(255,255,255,0.4);
+  }
+  .share-btn:active{ transform:translateY(1px); }
+  .share-btn .icon{ font-size:19px; line-height:1; }
+  .share-note{
+    margin-top:4px;
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--tan-soft);
+    max-width:270px;
+  }
+
+  /* SCROLL TO TOP */
+  .scroll-top-btn{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    z-index:999;
+    box-shadow:0 6px 18px rgba(0,0,0,0.28);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .scroll-top-btn.visible{ display:flex; }
+
+  /* LIVE PROGRAM PANEL */
+  .live-program{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 18px;
+    margin-bottom:26px;
+    background:var(--ink);
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.18);
+  }
+  .live-dot-wrap{
+    position:relative;
+    width:14px;
+    height:14px;
+    flex:0 0 auto;
+  }
+  .live-dot{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:#8FC244;
+  }
+  .live-dot::before{
+    content:'';
+    position:absolute;
+    inset:-6px;
+    border-radius:50%;
+    background:rgba(143,194,68,0.35);
+    animation:livepulse 1.6s ease-out infinite;
+  }
+  .live-program.is-upcoming .live-dot{ background:var(--tan-soft); }
+  .live-program.is-upcoming .live-dot::before{ background:rgba(199,175,140,0.35); }
+  @keyframes livepulse{
+    0%{ transform:scale(0.6); opacity:1; }
+    100%{ transform:scale(2); opacity:0; }
+  }
+  .live-program-text{ flex:1; min-width:0; }
+  .live-program-label{
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:10px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--tan-soft);
+    margin-bottom:3px;
+  }
+  .live-program-event{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--paper);
+    line-height:1.25;
+  }
+  .live-program-time{
+    flex:0 0 auto;
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:14px;
+    color:var(--paper);
+    background:rgba(255,255,255,0.14);
+    padding:6px 10px;
+    border-radius:8px;
+  }
+
   /* CO SI OBLÉCT */
 
 .dress-palette{
@@ -984,6 +1107,15 @@
 
   <div class="subtitle">Svatba</div>
 
+  <div class="live-program is-upcoming" id="liveProgram">
+    <div class="live-dot-wrap"><span class="live-dot"></span></div>
+    <div class="live-program-text">
+      <div class="live-program-label" id="liveProgramLabel">PRVNÍ NA PROGRAMU</div>
+      <div class="live-program-event" id="liveProgramEvent">Příjezd svatebčanů</div>
+    </div>
+    <div class="live-program-time" id="liveProgramTime">10:00</div>
+  </div>
+
   <div class="nav-stack">
 
     <button class="nav-btn" onclick="go('fotky')">
@@ -1030,6 +1162,10 @@
   </div>
 
 </div>
+
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Nahoru" onclick="scrollToTop()">↑</button>
+
+<canvas id="shareCanvas" width="1080" height="1920" style="display:none;"></canvas>
 
 <script>
     function go(id){
@@ -1182,6 +1318,75 @@ function getWeatherIcon(code){
 
   function showSurprise(from){ go('surprise-' + from); }
 
+  /* ---------- ŽIVÝ PROGRAM (sekce Svatba) ---------- */
+  const liveProgramItems = [
+    {time:"10:00", label:"PŘÍCHOD HOSTŮ"},
+    {time:"11:00", label:"SVATEBNÍ OBŘAD"},
+    {time:"12:00", label:"SPOLEČNÉ FOCENÍ"},
+    {time:"13:00", label:"OBĚD"},
+    {time:"15:30", label:"KRÁJENÍ DORTU"},
+    {time:"17:00", label:"HRA O SVATEBNÍ KYTICI"},
+    {time:"19:00", label:"PRVNÍ TANEC A OTEVŘENÍ PARKETU"}
+  ];
+
+  function updateLiveProgram(){
+    const el = document.getElementById('liveProgram');
+    if(!el) return;
+
+    const labelEl = document.getElementById('liveProgramLabel');
+    const eventEl = document.getElementById('liveProgramEvent');
+    const timeEl = document.getElementById('liveProgramTime');
+
+    const now = new Date();
+    const isWeddingDay =
+      now.getFullYear() === 2026 &&
+      now.getMonth() === 8 && // září = index 8
+      now.getDate() === 12;
+
+    if(!isWeddingDay){
+      el.classList.add('is-upcoming');
+      labelEl.textContent = 'PRVNÍ NA PROGRAMU';
+      eventEl.textContent = 'Příjezd svatebčanů';
+      timeEl.textContent = '10:00';
+      return;
+    }
+
+    let currentIndex = -1;
+    for(let i=0; i<liveProgramItems.length; i++){
+      const [h,m] = liveProgramItems[i].time.split(':').map(Number);
+      const itemTime = new Date(now);
+      itemTime.setHours(h, m, 0, 0);
+      if(now >= itemTime) currentIndex = i;
+    }
+
+    if(currentIndex === -1){
+      el.classList.add('is-upcoming');
+      labelEl.textContent = 'PRVNÍ NA PROGRAMU';
+      eventEl.textContent = 'Příjezd svatebčanů';
+      timeEl.textContent = liveProgramItems[0].time;
+    }else{
+      el.classList.remove('is-upcoming');
+      labelEl.textContent = 'PRÁVĚ PROBÍHÁ';
+      eventEl.textContent = liveProgramItems[currentIndex].label;
+      timeEl.textContent = liveProgramItems[currentIndex].time;
+    }
+  }
+  updateLiveProgram();
+  setInterval(updateLiveProgram, 30000);
+
+  /* ---------- SCROLL NAHORU ---------- */
+  const scrollBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 220){
+      scrollBtn.classList.add('visible');
+    }else{
+      scrollBtn.classList.remove('visible');
+    }
+  });
+  function scrollToTop(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
   /* ---------- QUIZ ---------- */
 const questions = [
     {q:"Kolik bude novomanželům v den svatby dohromady let?", opts:["52","55","50","49"], correct:0, topic:"vek"},
@@ -1325,8 +1530,13 @@ function renderResult(percent, wrongTopics){
         <button class="retry-btn" onclick="retryQuiz()">Opakovat test</button>
 
 <div class="route-intro" style="margin-top:20px;">
-  Pochlub se novomanželům se svým výsledkem a pošli jim ho.
+  Před odjezdem ukaž tento výsledek svatebčanům nebo svědkům a vyzvedni si od nich svou odměnu!
 </div>
+
+        <button class="share-btn" id="shareBtn" onclick="shareResult(${percent})">
+          <span class="icon">📤</span><span>Sdílet výsledek</span>
+        </button>
+        <div class="share-note">Vytvoří se obrázek k uložení do fotek nebo ke sdílení přes aplikace.</div>
       </div>
     `;
   }
@@ -1335,6 +1545,152 @@ function renderResult(percent, wrongTopics){
     answers = new Array(questions.length).fill(null);
     current = 0;
     renderQuiz();
+  }
+
+  /* ---------- SDÍLENÍ VÝSLEDKU (obrázek) ---------- */
+
+  function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight){
+    const words = text.split(' ');
+    let line = '';
+    let lines = [];
+    for(let n=0; n<words.length; n++){
+      const testLine = line + words[n] + ' ';
+      const metrics = ctx.measureText(testLine);
+      if(metrics.width > maxWidth && n > 0){
+        lines.push(line.trim());
+        line = words[n] + ' ';
+      }else{
+        line = testLine;
+      }
+    }
+    lines.push(line.trim());
+    const startY = y - ((lines.length-1) * lineHeight) / 2;
+    lines.forEach((l, i) => {
+      ctx.fillText(l, x, startY + i*lineHeight);
+    });
+    return lines.length;
+  }
+
+  async function shareResult(percent){
+    const btn = document.getElementById('shareBtn');
+    const originalHtml = btn ? btn.innerHTML : null;
+    if(btn){
+      btn.disabled = true;
+      btn.innerHTML = '<span>Připravuji obrázek…</span>';
+    }
+
+    try{
+      if(document.fonts && document.fonts.ready){
+        await document.fonts.ready;
+      }
+    }catch(e){}
+
+    try{
+      const canvas = document.getElementById('shareCanvas');
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height;
+
+      // pozadí
+      ctx.fillStyle = '#F6F1E7';
+      ctx.fillRect(0, 0, W, H);
+
+      // rámeček
+      ctx.strokeStyle = '#DDD3C0';
+      ctx.lineWidth = 5;
+      ctx.strokeRect(36, 36, W-72, H-72);
+
+      // barevné tečky
+      const dotColors = ['#F0C43D','#E36225','#E85C88','#A15FC9','#6FB3E0','#8FC244'];
+      const dotSize = 26, gap = 20;
+      const totalDotsWidth = dotColors.length*dotSize + (dotColors.length-1)*gap;
+      let dx = (W - totalDotsWidth)/2;
+      const dotY = 165;
+      dotColors.forEach(c => {
+        ctx.beginPath();
+        ctx.arc(dx + dotSize/2, dotY, dotSize/2, 0, Math.PI*2);
+        ctx.fillStyle = c;
+        ctx.fill();
+        dx += dotSize + gap;
+      });
+
+      ctx.textAlign = 'center';
+
+      // titulek
+      ctx.fillStyle = '#171512';
+      ctx.font = '800 58px Inter, sans-serif';
+      ctx.fillText('SVATEBNÍ KVÍZ', W/2, 280);
+
+      ctx.fillStyle = '#A6885F';
+      ctx.font = 'italic 600 48px Fraunces, serif';
+      ctx.fillText('Tereza & Ondřej', W/2, 350);
+
+      // kruh se skóre
+      const cx = W/2, cy = 780, r = 270;
+      const hue = Math.max(0, Math.min(100, percent)) * 1.2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI*2);
+      ctx.fillStyle = `hsl(${hue}, 62%, 45%)`;
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '700 170px Fraunces, serif';
+      ctx.fillText(percent + '%', cx, cy + 55);
+
+      ctx.font = '700 30px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.88)';
+      ctx.fillText('VÝSLEDEK', cx, cy + 110);
+
+      // zpráva
+      ctx.fillStyle = '#171512';
+      ctx.font = 'italic 600 44px Fraunces, serif';
+      wrapCanvasText(ctx, scoreMessage(percent), cx, 1240, 860, 58);
+
+      // datum
+      ctx.font = '700 32px Inter, sans-serif';
+      ctx.fillStyle = '#A6885F';
+      ctx.fillText('12. ZÁŘÍ 2026', cx, 1620);
+
+      // podpis
+      ctx.font = '48px "Alex Brush", cursive';
+      ctx.fillStyle = '#171512';
+      ctx.fillText('Znáš nás dobře?', cx, 1720);
+
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+      if(!blob) throw new Error('Obrázek se nepodařilo vytvořit');
+
+      const fileName = 'svatebni-kviz-vysledek.png';
+      const file = new File([blob], fileName, {type:'image/png'});
+
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        try{
+          await navigator.share({
+            files:[file],
+            title:'Svatební kvíz',
+            text:'Podívej se, jak dobře znám novomanžele!'
+          });
+          return;
+        }catch(shareErr){
+          // uživatel zavřel dialog nebo sdílení selhalo -> nabídneme stažení
+        }
+      }
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+    }catch(err){
+      alert('Obrázek se bohužel nepodařilo vytvořit. Zkuste to prosím znovu.');
+    }finally{
+      if(btn){
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
+    }
   }
 </script>
 
