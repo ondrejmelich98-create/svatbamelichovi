@@ -17,7 +17,7 @@
     --y:#F0C43D; --o:#E36225; --p:#E85C88; --pu:#A15FC9; --bl:#6FB3E0; --g:#8FC244;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{height:100%;}
+  html{min-height:100%;}
   body{
     background:var(--paper);
     color:var(--ink);
@@ -25,6 +25,7 @@
     display:flex;
     align-items:center;
     justify-content:center;
+    min-height:100vh;
     padding:20px;
     -webkit-font-smoothing:antialiased;
   }
@@ -955,43 +956,8 @@
 
 <div class="program-wrapper">
 
-  <div class="timeline">
-
-    <div class="timeline-row">
-      <div class="timeline-time">10:00</div>
-      <div class="timeline-event">PŘÍCHOD HOSTŮ</div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">11:00</div>
-      <div class="timeline-event">SVATEBNÍ OBŘAD</div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">12:00</div>
-      <div class="timeline-event">SPOLEČNÉ FOCENÍ</div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">13:00</div>
-      <div class="timeline-event">OBĚD</div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">15:30</div>
-      <div class="timeline-event">KRÁJENÍ DORTU</div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">17:00</div>
-      <div class="timeline-event">HRA O SVATEBNÍ KYTICI</div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">19:00</div>
-      <div class="timeline-event">PRVNÍ TANEC A OTEVŘENÍ PARKETU</div>
-    </div>
-
+  <div class="timeline" id="programTimeline">
+    <!-- řádky se generují automaticky z pole weddingProgram v <script>, aby program vždy odpovídal sekci "Svatba" -->
   </div>
 
 </div>
@@ -1111,7 +1077,7 @@
     <div class="live-dot-wrap"><span class="live-dot"></span></div>
     <div class="live-program-text">
       <div class="live-program-label" id="liveProgramLabel">PRVNÍ NA PROGRAMU</div>
-      <div class="live-program-event" id="liveProgramEvent">Příjezd svatebčanů</div>
+      <div class="live-program-event" id="liveProgramEvent">PŘÍCHOD HOSTŮ</div>
     </div>
     <div class="live-program-time" id="liveProgramTime">10:00</div>
   </div>
@@ -1318,8 +1284,11 @@ function getWeatherIcon(code){
 
   function showSurprise(from){ go('surprise-' + from); }
 
-  /* ---------- ŽIVÝ PROGRAM (sekce Svatba) ---------- */
-  const liveProgramItems = [
+  /* ---------- SPOLEČNÝ PROGRAM ----------
+     Jediný zdroj pravdy pro časy a názvy bodů programu.
+     Používá ho jak stránka "Před svatbou → Program" (výpis časové osy),
+     tak "živý" ukazatel v sekci "Svatba" — takže vždy zobrazují stejné údaje. */
+  const weddingProgram = [
     {time:"10:00", label:"PŘÍCHOD HOSTŮ"},
     {time:"11:00", label:"SVATEBNÍ OBŘAD"},
     {time:"12:00", label:"SPOLEČNÉ FOCENÍ"},
@@ -1328,6 +1297,18 @@ function getWeatherIcon(code){
     {time:"17:00", label:"HRA O SVATEBNÍ KYTICI"},
     {time:"19:00", label:"PRVNÍ TANEC A OTEVŘENÍ PARKETU"}
   ];
+
+  function renderProgramTimeline(){
+    const container = document.getElementById('programTimeline');
+    if(!container) return;
+    container.innerHTML = weddingProgram.map(item => `
+      <div class="timeline-row">
+        <div class="timeline-time">${item.time}</div>
+        <div class="timeline-event">${item.label}</div>
+      </div>
+    `).join('');
+  }
+  renderProgramTimeline();
 
   function updateLiveProgram(){
     const el = document.getElementById('liveProgram');
@@ -1352,8 +1333,8 @@ function getWeatherIcon(code){
     }
 
     let currentIndex = -1;
-    for(let i=0; i<liveProgramItems.length; i++){
-      const [h,m] = liveProgramItems[i].time.split(':').map(Number);
+    for(let i=0; i<weddingProgram.length; i++){
+      const [h,m] = weddingProgram[i].time.split(':').map(Number);
       const itemTime = new Date(now);
       itemTime.setHours(h, m, 0, 0);
       if(now >= itemTime) currentIndex = i;
@@ -1362,13 +1343,13 @@ function getWeatherIcon(code){
     if(currentIndex === -1){
       el.classList.add('is-upcoming');
       labelEl.textContent = 'PRVNÍ NA PROGRAMU';
-      eventEl.textContent = 'Příjezd svatebčanů';
-      timeEl.textContent = liveProgramItems[0].time;
+      eventEl.textContent = weddingProgram[0].label;
+      timeEl.textContent = weddingProgram[0].time;
     }else{
       el.classList.remove('is-upcoming');
       labelEl.textContent = 'PRÁVĚ PROBÍHÁ';
-      eventEl.textContent = liveProgramItems[currentIndex].label;
-      timeEl.textContent = liveProgramItems[currentIndex].time;
+      eventEl.textContent = weddingProgram[currentIndex].label;
+      timeEl.textContent = weddingProgram[currentIndex].time;
     }
   }
   updateLiveProgram();
@@ -1509,6 +1490,7 @@ function submitQuiz(){
 function renderResult(percent, wrongTopics){
     const root = document.getElementById('quizRoot');
     const color = scoreColor(percent);
+    window.scrollTo(0, 0);
 
     const topicsToShow = (wrongTopics || []).slice(0, 4);
     const topicsHtml = topicsToShow.length ? `
