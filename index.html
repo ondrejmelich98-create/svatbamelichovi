@@ -659,6 +659,7 @@
     background:var(--ink);
     border-radius:12px;
     box-shadow:0 6px 18px rgba(0,0,0,0.18);
+    cursor:pointer;
   }
   .live-dot-wrap{
     position:relative;
@@ -712,6 +713,30 @@
     background:rgba(255,255,255,0.14);
     padding:6px 10px;
     border-radius:8px;
+  }
+  .live-program-next{
+    margin-top:8px;
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:0.04em;
+    color:var(--tan-soft);
+    line-height:1.3;
+  }
+  .live-program-next .next-label{
+    font-weight:800;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-size:9px;
+    margin-right:4px;
+    color:var(--tan-soft);
+  }
+  .live-program-next .next-time{
+    font-weight:700;
+    color:var(--paper);
+    margin-right:4px;
+  }
+  .live-program-next .next-event{
+    color:rgba(246,241,231,0.75);
   }
 
   /* CO SI OBLÉCT */
@@ -1073,11 +1098,12 @@
 
   <div class="subtitle">Svatba</div>
 
-  <div class="live-program is-upcoming" id="liveProgram">
+  <div class="live-program is-upcoming" id="liveProgram" onclick="go('program')">
     <div class="live-dot-wrap"><span class="live-dot"></span></div>
     <div class="live-program-text">
       <div class="live-program-label" id="liveProgramLabel">PRVNÍ NA PROGRAMU</div>
       <div class="live-program-event" id="liveProgramEvent">PŘÍCHOD HOSTŮ</div>
+      <div class="live-program-next" id="liveProgramNext" style="display:none;"></div>
     </div>
     <div class="live-program-time" id="liveProgramTime">10:00</div>
   </div>
@@ -1298,6 +1324,11 @@ function getWeatherIcon(code){
     {time:"19:00", label:"PRVNÍ TANEC A OTEVŘENÍ PARKETU"}
   ];
 
+  // Datum svatby - používá se pro výpočet, zda je daný bod programu už "aktuální" nebo ještě "nadcházející"
+  const WEDDING_YEAR = 2026;
+  const WEDDING_MONTH_INDEX = 8; // září (0 = leden)
+  const WEDDING_DAY = 12;
+
   function renderProgramTimeline(){
     const container = document.getElementById('programTimeline');
     if(!container) return;
@@ -1310,6 +1341,11 @@ function getWeatherIcon(code){
   }
   renderProgramTimeline();
 
+  function programItemDateTime(item){
+    const [h, m] = item.time.split(':').map(Number);
+    return new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY, h, m, 0, 0);
+  }
+
   function updateLiveProgram(){
     const el = document.getElementById('liveProgram');
     if(!el) return;
@@ -1317,39 +1353,46 @@ function getWeatherIcon(code){
     const labelEl = document.getElementById('liveProgramLabel');
     const eventEl = document.getElementById('liveProgramEvent');
     const timeEl = document.getElementById('liveProgramTime');
+    const nextEl = document.getElementById('liveProgramNext');
 
     const now = new Date();
-    const isWeddingDay =
-      now.getFullYear() === 2026 &&
-      now.getMonth() === 8 && // září = index 8
-      now.getDate() === 12;
 
-    if(!isWeddingDay){
-      el.classList.add('is-upcoming');
-      labelEl.textContent = 'PRVNÍ NA PROGRAMU';
-      eventEl.textContent = 'Příjezd svatebčanů';
-      timeEl.textContent = '10:00';
-      return;
-    }
-
+    // najdi poslední bod programu, který už podle skutečného data a času nastal
     let currentIndex = -1;
-    for(let i=0; i<weddingProgram.length; i++){
-      const [h,m] = weddingProgram[i].time.split(':').map(Number);
-      const itemTime = new Date(now);
-      itemTime.setHours(h, m, 0, 0);
-      if(now >= itemTime) currentIndex = i;
+    for(let i = 0; i < weddingProgram.length; i++){
+      if(now >= programItemDateTime(weddingProgram[i])){
+        currentIndex = i;
+      }
     }
 
     if(currentIndex === -1){
+      // Svatba ještě nezačala (ať už jsme dny, nebo jen hodiny před prvním bodem)
       el.classList.add('is-upcoming');
       labelEl.textContent = 'PRVNÍ NA PROGRAMU';
       eventEl.textContent = weddingProgram[0].label;
       timeEl.textContent = weddingProgram[0].time;
+
+      const upcomingNext = weddingProgram[1];
+      if(upcomingNext){
+        nextEl.innerHTML = `<span class="next-label">Nadcházející</span><span class="next-time">${upcomingNext.time}</span><span class="next-event">${upcomingNext.label}</span>`;
+        nextEl.style.display = 'block';
+      }else{
+        nextEl.style.display = 'none';
+      }
     }else{
       el.classList.remove('is-upcoming');
       labelEl.textContent = 'PRÁVĚ PROBÍHÁ';
       eventEl.textContent = weddingProgram[currentIndex].label;
       timeEl.textContent = weddingProgram[currentIndex].time;
+
+      const next = weddingProgram[currentIndex + 1];
+      if(next){
+        nextEl.innerHTML = `<span class="next-label">Nadcházející</span><span class="next-time">${next.time}</span><span class="next-event">${next.label}</span>`;
+        nextEl.style.display = 'block';
+      }else{
+        // poslední bod programu už proběhl - žádný další bod nenásleduje
+        nextEl.style.display = 'none';
+      }
     }
   }
   updateLiveProgram();
@@ -1508,17 +1551,18 @@ function renderResult(percent, wrongTopics){
         </div>
         <h2>${scoreMessage(percent)}</h2>
         <div class="sub">Znáte novomanžele z ${percent} %</div>
+
+        <button class="share-btn" id="shareBtn" onclick="shareResult(${percent})">
+          <span class="icon">📤</span><span>Sdílet výsledek</span>
+        </button>
+        <div class="share-note">Vytvoří se obrázek k uložení do fotek nebo ke sdílení přes aplikace.</div>
+
         ${topicsHtml}
         <button class="retry-btn" onclick="retryQuiz()">Opakovat test</button>
 
 <div class="route-intro" style="margin-top:20px;">
   Před odjezdem ukaž tento výsledek svatebčanům nebo svědkům a vyzvedni si od nich svou odměnu!
 </div>
-
-        <button class="share-btn" id="shareBtn" onclick="shareResult(${percent})">
-          <span class="icon">📤</span><span>Sdílet výsledek</span>
-        </button>
-        <div class="share-note">Vytvoří se obrázek k uložení do fotek nebo ke sdílení přes aplikace.</div>
       </div>
     `;
   }
