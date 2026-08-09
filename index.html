@@ -984,6 +984,54 @@
     color:var(--tan-soft);
     padding:11px 0 2px;
   }  
+/* ODVOZ — TLAČÍTKO PRO VOLÁNÍ */
+
+  .call-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    width:100%;
+    padding:20px 16px;
+    margin-top:6px;
+
+    background:linear-gradient(180deg, #B79768, var(--tan));
+    color:#fff;
+
+    border:none;
+    border-radius:12px;
+
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:19px;
+    letter-spacing:0.04em;
+
+    text-decoration:none;
+    -webkit-tap-highlight-color:transparent;
+
+    box-shadow:
+      0 6px 18px rgba(166,136,95,0.45),
+      0 0 30px rgba(255,255,255,0.4);
+  }
+
+  .call-btn:active{ transform:translateY(1px); }
+
+  .call-btn .icon{
+    font-size:20px;
+    line-height:1;
+  }
+
+  .call-note{
+    margin-top:10px;
+    text-align:center;
+
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--tan-soft);
+  }
 </style>
 </head>
 <body>
@@ -1181,6 +1229,7 @@
 
 </div>
 <!-- ODVOZ ZE SVATBY -->
+<!-- ODVOZ ZE SVATBY -->
 <div class="view" id="view-odvoz">
 
   <button class="backbtn" onclick="go('na')">← Zpět</button>
@@ -1193,13 +1242,25 @@
 
     <br><br>
 
-    Pokud budete chtít odvézt, kontaktujte prosím našeho řidiče na telefonním čísle:
-
-    <br><br>
-
-    <span style="color:var(--tan); font-weight:700;">📞 +420 XXX XXX XXX</span>
+    Pokud budete chtít odvézt, stačí kliknout na tlačítko níže a rovnou se dovoláte našemu řidiči.
 
   </div>
+
+  <!-- ZDE ZMĚŇ ČÍSLO:
+       href="tel:+420XXXXXXXXX"  ← bez mezer, s předvolbou
+       text v <span>             ← jak se číslo zobrazí hostům -->
+  <a class="call-btn" href="tel:+420733287236">
+    <span class="icon">📞</span>
+    <span>+420 733 287 236</span>
+  </a>
+
+  <div class="call-note">Klikněte pro zavolání</div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
 
   <footer class="mini">
     Tereza &amp; Ondřej — 2026
