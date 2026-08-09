@@ -1631,6 +1631,10 @@ function renderResult(percent, wrongTopics){
         <h2>${scoreMessage(percent)}</h2>
         <div class="sub">Znáte novomanžele z ${percent} %</div>
 
+        <div class="route-intro" style="margin-top:14px; margin-bottom:0;">
+          Před odjezdem ukaž tento výsledek svatebčanům nebo svědkům a vyzvedni si od nich svou odměnu!
+        </div>
+
         <button class="share-btn" id="shareBtn" onclick="shareResult(${percent})">
           <span class="icon">📤</span><span>Sdílet výsledek</span>
         </button>
@@ -1638,10 +1642,6 @@ function renderResult(percent, wrongTopics){
 
         ${topicsHtml}
         <button class="retry-btn" onclick="retryQuiz()">Opakovat test</button>
-
-<div class="route-intro" style="margin-top:20px;">
-  Před odjezdem ukaž tento výsledek svatebčanům nebo svědkům a vyzvedni si od nich svou odměnu!
-</div>
       </div>
     `;
   }
