@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
@@ -44,960 +45,185 @@
   .view{display:none; flex-direction:column; height:100%;}
   .view.active{display:flex;}
 
-  /* HOME HEADER */
-  .brand{
-    text-align:center;
-    margin-bottom:30px;
-  }
-  .brand .eyebrow{
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:11px;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    color:var(--tan);
-    margin-bottom:14px;
-  }
-  .brand h1{
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:clamp(34px, 11vw, 46px);
-    letter-spacing:0.01em;
-    color:var(--ink);
-    text-transform:uppercase;
-    line-height:1.02;
-  }
-  /* Ampersand v podpisovém písmu — jediné místo, kde se objevuje */
-  .brand h1 .amp{
-    display:block;
-    font-family:'Alex Brush', cursive;
-    font-weight:400;
-    font-size:0.88em;
-    text-transform:none;
-    letter-spacing:0;
-    line-height:1;
-    color:var(--tan);
-    margin:2px 0;
-  }
-  .countdown{
-    margin-top:18px;
-    text-align:center;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:13px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--ink);
-  }
-  .countdown .num{
-    font-family:'Fraunces', serif;
-    font-weight:700;
-    font-style:normal;
-    font-size:17px;
-    color:var(--tan);
-    margin-right:5px;
-  }
-
-
-  .nav-stack{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:14px;
-  }
-.nav-btn{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  width:100%;
-  min-height:76px;
-
-  padding:18px 16px;
-
-  background:rgba(255,255,255,0.45);
-
-  border:1.5px solid var(--card-border);
-  border-radius:10px;
-
-  font-family:'Inter',sans-serif;
-  font-weight:800;
-  font-size:16px;
-  letter-spacing:0.06em;
-  text-transform:uppercase;
-  color:var(--ink);
-
-  text-align:center;
-  cursor:pointer;
-
-  -webkit-tap-highlight-color:transparent;
-
-  box-shadow:
-    0 0 20px rgba(255,255,255,0.9),
-    0 0 35px rgba(255,255,255,0.55);
-}
-.nav-btn-bonus{
-  min-height:95px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.70),
-      rgba(255,255,255,0.45)
-    );
-
-  box-shadow:
-    0 0 22px rgba(255,255,255,0.95),
-    0 0 40px rgba(255,255,255,0.60);
-}
-
-.bonus-title{
-  display:block;
-
-  font-family:'Inter',sans-serif;
-  font-weight:800;
-  font-size:20px;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-
-  color:var(--tan);
-}
-
-.bonus-subtitle{
-  display:block;
-
-  margin-top:6px;
-
-  font-family:'Fraunces',serif;
-  font-style:italic;
-  font-weight:500;
-
-  font-size:15px;
-  letter-spacing:0;
-
-  text-transform:none;
-  color:var(--ink);
-}
-  .nav-btn:active{ background:var(--tan-fill); border-color:var(--tan); }
-  .nav-btn .cap{
-    display:block;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:11px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--tan);
-    margin-top:6px;
-  }
-
-  .signature{
-    text-align:center;
-    font-family:'Alex Brush', cursive;
-    font-size:42px;
-    color:var(--ink);
-    margin-top:26px;
-  }
-  .datebar{
-    text-align:center;
-    font-family:'Inter',sans-serif;
-    font-size:12px;
-    letter-spacing:0.14em;
-    color:var(--tan-soft);
-    text-transform:uppercase;
-    margin-top:8px;
-  }
-  .weather{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    margin-top:18px;
-}
-.weather-title{
-    font-family:'Inter',sans-serif;
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--tan);
-    margin-bottom:10px;
-}
-.weather-icon{
-    font-size:28px;
-    line-height:1;
-    margin-bottom:6px;
-}
-
-.weather-temp{
-    font-family:'Fraunces',serif;
-    font-weight:700;
-    font-size:22px;
-    color:var(--tan);
-}
-
-.weather-rain{
-    margin-top:4px;
-    font-family:'Inter',sans-serif;
-    font-size:11px;
-    letter-spacing:0.10em;
-    text-transform:uppercase;
-    color:var(--tan-soft);
-}
-
-.weather-info{
-    font-family:'Inter',sans-serif;
-    font-size:12px;
-    line-height:1.6;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--tan-soft);
-}
-  /* SUB PAGES */
-  .backbtn{
-    align-self:flex-start;
-    background:none;
-    border:none;
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:20px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--tan);
-    cursor:pointer;
-    padding:6px 0;
-    margin-bottom:24px;
-  }
-  .subtitle{
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:32px;
-    letter-spacing:-0.01em;
-    color:var(--ink);
-    text-transform:uppercase;
-    text-align:center;
-    margin-bottom:30px;
-    line-height:1.1;
-}
-
-  /* SURPRISE / TEASER VIEW */
-  .surprise{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    gap:18px;
-  }
-  .dots{ display:flex; gap:10px; margin-bottom:6px; }
-  .dot{width:16px; height:16px; border-radius:50%;}
-  .d1{background:var(--y);} .d2{background:var(--o);} .d3{background:var(--p);}
-  .d4{background:var(--pu);} .d5{background:var(--bl);} .d6{background:var(--g);}
-
-  .surprise h2{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-style:italic;
-    font-size:30px;
-    color:var(--ink);
-    line-height:1.15;
-  }
-  .surprise p{
-    font-family:'Inter',sans-serif;
-    font-size:13px;
-    color:var(--tan);
-    letter-spacing:0.04em;
-    max-width:260px;
-  }
-
-  footer.mini{
-    text-align:center;
-    font-family:'Inter',sans-serif;
-    font-size:11px;
-    letter-spacing:0.12em;
-    color:var(--tan-soft);
-    text-transform:uppercase;
-    margin-top:auto;
-    padding-top:24px;
-  }
-  /* KUDY NA SVATBU */
-
-.route-intro{
-  font-family:'Inter',sans-serif;
-  font-size:14px;
-  line-height:1.7;
-  color:var(--ink);
-  margin-bottom:24px;
-  text-align:center;
-}
-
-.route-links{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-
-.route-card{
-  display:flex;
-  align-items:center;
-  gap:16px;
-
-  padding:16px;
-
-  border:1.5px solid var(--card-border);
-  border-radius:10px;
-
-  background:rgba(255,255,255,0.45);
-
-  text-decoration:none;
-  color:var(--ink);
-
-  box-shadow:
-    0 0 20px rgba(255,255,255,0.9),
-    0 0 35px rgba(255,255,255,0.55);
-
-  transition:all 0.2s ease;
-}
-
-.route-card:hover{
-  transform:translateY(-2px);
-}
-
-.route-card img{
-  width:42px;
-  height:42px;
-  object-fit:contain;
-}
-
-.route-card span{
-  font-family:'Inter',sans-serif;
-  font-weight:700;
-  font-size:15px;
-  color:var(--ink);
-}
-  /* QUIZ */
-  #quizRoot{flex:1; display:flex; flex-direction:column;}
-  .q-progress-label{
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:11px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--tan);
-    margin-bottom:10px;
-  }
-  .q-bar{
-    height:3px;
-    width:100%;
-    background:var(--card-border);
-    border-radius:3px;
-    overflow:hidden;
-    margin-bottom:28px;
-  }
-  .q-bar-fill{
-    height:100%;
-    background:var(--tan);
-    border-radius:3px;
-    transition:width 0.25s ease;
-  }
-  .q-text{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:21px;
-    line-height:1.3;
-    color:var(--ink);
-    margin-bottom:24px;
-    min-height:80px;
-  }
-  .q-options{ display:flex; flex-direction:column; gap:10px; margin-bottom:22px; }
-  .q-opt{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    width:100%;
-    padding:13px 14px;
-    background:transparent;
-    border:1.5px solid var(--card-border);
-    border-radius:10px;
-    font-family:'Inter',sans-serif;
-    font-weight:500;
-    font-size:14px;
-    color:var(--ink);
-    text-align:left;
-    cursor:pointer;
-    transform:scale(1);
-    transition:background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-  }
-  .q-opt .letter{
-    flex:0 0 auto;
-    width:24px; height:24px;
-    border-radius:50%;
-    border:1.5px solid var(--card-border);
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:11px;
-    color:var(--tan);
-  }
-  .q-opt.selected{
-    background:var(--tan-fill);
-    border-color:var(--tan);
-    animation:pop 0.28s ease;
-  }
-  .q-opt.selected .letter{
-    background:var(--tan);
-    border-color:var(--tan);
-    color:#fff;
-  }
-  @keyframes pop{
-    0%{transform:scale(1);}
-    45%{transform:scale(1.035);}
-    100%{transform:scale(1);}
-  }
-
-  .q-nav{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:30px;
-  }
-  .q-nav button{
-    background:none;
-    border:none;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:12px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--tan);
-    cursor:pointer;
-    padding:8px 4px;
-  }
-  .q-nav button:disabled{ color:var(--card-border); cursor:default; }
-
-  .q-jump{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    justify-content:center;
-    margin-bottom:20px;
-  }
-  .q-jump-dot{
-    width:24px; height:24px;
-    border-radius:50%;
-    border:1.5px solid var(--card-border);
-    background:transparent;
-    font-family:'Inter',sans-serif;
-    font-size:9px;
-    font-weight:700;
-    color:var(--tan-soft);
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-  }
-  .q-jump-dot.answered{ background:var(--tan-soft); border-color:var(--tan-soft); color:#fff; }
-  .q-jump-dot.current{ border-color:var(--ink); color:var(--ink); }
-
-  .q-submit{
-    margin-top:auto;
-    width:100%;
-    padding:16px;
-    background:var(--ink);
-    color:var(--paper);
-    border:none;
-    border-radius:10px;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:14px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    cursor:pointer;
-  }
-
-  /* RESULT */
-  .result{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    gap:16px;
-  }
-  .result-badge{
-    width:128px; height:128px;
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    flex-direction:column;
-  }
-  .result-badge .pct{
-    font-family:'Fraunces', serif;
-    font-weight:700;
-    font-size:34px;
-    color:#fff;
-  }
-  .result-badge .pct-label{
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:9px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:rgba(255,255,255,0.85);
-  }
-  .result h2{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:600;
-    font-size:24px;
-    color:var(--ink);
-    max-width:280px;
-    line-height:1.25;
-    margin-top:6px;
-  }
-  .result .sub{
-    font-family:'Inter',sans-serif;
-    font-size:12px;
-    color:var(--tan);
-    letter-spacing:0.04em;
-  }
-.retry-btn{
-    margin-top:10px;
-    padding:14px 26px;
-    background:transparent;
-    border:1.5px solid var(--ink);
-    border-radius:10px;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:13px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--ink);
-    cursor:pointer;
-  }
-  .result-topics-title{
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:11px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--tan);
-    text-align:center;
-    margin-top:14px;
-    margin-bottom:2px;
-  }
-  .result-topics{
-    margin-top:2px;
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    text-align:left;
-  }
-  .topic-item{
-    font-family:'Inter',sans-serif;
-    font-size:13px;
-    line-height:1.5;
-    color:var(--ink);
-    padding:10px 12px;
-    border:1px solid var(--card-border);
-    border-radius:8px;
-    background:rgba(255,255,255,0.4);
-  }
-
-  /* SHARE BUTTON */
-  .share-btn{
-    margin-top:18px;
-    width:100%;
-    padding:19px 16px;
-    background:linear-gradient(180deg, #B79768, var(--tan));
-    color:#fff;
-    border:none;
-    border-radius:12px;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:16px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    box-shadow:
-      0 6px 18px rgba(166,136,95,0.45),
-      0 0 30px rgba(255,255,255,0.4);
-  }
-  .share-btn:active{ transform:translateY(1px); }
-  .share-btn .icon{ font-size:19px; line-height:1; }
-  .share-note{
-    margin-top:4px;
-    font-family:'Inter',sans-serif;
-    font-size:11px;
-    letter-spacing:0.06em;
-    color:var(--tan-soft);
-    max-width:270px;
-  }
-
-  /* SCROLL TO TOP */
-  .scroll-top-btn{
-    position:fixed;
-    right:18px;
-    bottom:18px;
-    width:48px;
-    height:48px;
-    border-radius:50%;
-    background:var(--ink);
-    color:var(--paper);
-    border:none;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-    font-family:'Inter',sans-serif;
-    cursor:pointer;
-    z-index:999;
-    box-shadow:0 6px 18px rgba(0,0,0,0.28);
-    -webkit-tap-highlight-color:transparent;
-  }
-  .scroll-top-btn.visible{ display:flex; }
-
-  /* LIVE PROGRAM PANEL */
-  .live-program{
-    display:flex;
-    flex-direction:column;
-    padding:16px 18px;
-    margin-bottom:26px;
-    background:var(--ink);
-    border-radius:12px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.18);
-    cursor:pointer;
-  }
-  .live-program-main{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    min-width:0;
-  }
-  .live-dot-wrap{
-    position:relative;
-    width:14px;
-    height:14px;
-    flex:0 0 auto;
-  }
-  .live-dot{
-    position:absolute;
-    inset:0;
-    border-radius:50%;
-    background:#8FC244;
-  }
-  .live-dot::before{
-    content:'';
-    position:absolute;
-    inset:-6px;
-    border-radius:50%;
-    background:rgba(143,194,68,0.35);
-    animation:livepulse 1.6s ease-out infinite;
-  }
-  .live-program.is-upcoming .live-dot{ background:var(--tan-soft); }
-  .live-program.is-upcoming .live-dot::before{ background:rgba(199,175,140,0.35); }
-  @keyframes livepulse{
-    0%{ transform:scale(0.6); opacity:1; }
-    100%{ transform:scale(2); opacity:0; }
-  }
-  .live-program-text{ flex:1 1 auto; min-width:0; }
-  .live-program-label{
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:10px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--tan-soft);
-    margin-bottom:3px;
-  }
-  .live-program-event{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:clamp(14px, 4.2vw, 17px);
-    color:var(--paper);
-    line-height:1.2;
-  }
-  .live-program-time{
-    flex:0 0 auto;
-    font-family:'Inter',sans-serif;
-    font-weight:800;
-    font-size:14px;
-    color:var(--paper);
-    background:rgba(255,255,255,0.14);
-    padding:6px 10px;
-    border-radius:8px;
-  }
-  /* Šipka naznačuje, že se panelem dá proklikat na celý program */
-  .live-program-chevron{
-    flex:0 0 auto;
-    margin-left:4px;
-    font-family:'Inter',sans-serif;
-    font-size:16px;
-    line-height:1;
-    color:rgba(246,241,231,0.5);
-    transition:transform 0.18s ease, color 0.18s ease;
-  }
-  .live-program:hover .live-program-chevron,
-  .live-program:active .live-program-chevron{
-    color:var(--paper);
-    transform:translateX(3px);
-  }
-  .live-program:active{ background:#221f1b; }
-  .live-program:focus-visible{
-    outline:2px solid var(--tan-soft);
-    outline-offset:3px;
-  }
-  @media (prefers-reduced-motion: reduce){
-    .live-program-chevron{ transition:none; }
-    .live-program:hover .live-program-chevron,
-    .live-program:active .live-program-chevron{ transform:none; }
-  }
-  /* Nadcházející bod programu — samostatný řádek přes celou šířku,
-     nikdy se nezalamuje (velikost písma dolaďuje fitLiveProgramNext()). */
-  .live-program-next{
-    display:block;
-    margin-top:12px;
-    padding-top:11px;
-    border-top:1px solid rgba(246,241,231,0.16);
-    font-family:'Inter',sans-serif;
-    font-size:11px;
-    line-height:1.35;
-    letter-spacing:0.02em;
-    color:var(--tan-soft);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .live-program-next .next-label{
-    font-weight:800;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    font-size:0.85em;
-    margin-right:7px;
-    color:var(--tan-soft);
-  }
-  .live-program-next .next-time{
-    font-weight:700;
-    color:var(--paper);
-    margin-right:6px;
-  }
-  .live-program-next .next-event{
-    color:rgba(246,241,231,0.78);
-  }
-  @media (max-width:360px){
-    .card{ padding:34px 18px; }
-    .live-program{ padding:14px 14px; }
-    .live-program-main{ gap:10px; }
-    .live-program-time{ padding:5px 8px; font-size:13px; }
-  }
-
-  /* CO SI OBLÉCT */
-
-.dress-palette{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:14px;
-  margin-top:12px;
-}
-
-.palette-color{
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,0.8);
-
-  box-shadow:
-    0 0 15px rgba(255,255,255,0.9),
-    0 0 30px rgba(255,255,255,0.5);
-}
-/* NÁPOJOVÝ LÍSTEK */
-
-.drinks-page{
-  flex:1;
-  overflow-y:auto;
-  padding-right:4px;
-  padding-bottom:10px;
-}
-
-.drinks-intro{
-  font-family:'Inter',sans-serif;
-  font-size:14px;
-  line-height:1.7;
-  color:var(--ink);
-  text-align:center;
-  margin-bottom:30px;
-}
-
-.drinks-category{
-  margin-bottom:30px;
-}
-
-.drinks-category-header{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:14px;
-}
-
-.drinks-category-dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  flex:0 0 auto;
-}
-
-.drinks-category-title{
-  font-family:'Fraunces',serif;
-  font-size:21px;
-  font-weight:600;
-  font-style:italic;
-  color:var(--tan);
-  line-height:1.2;
-}
-
-.drinks-list{
-  display:flex;
-  flex-direction:column;
-  gap:0;
-}
-
-.drink-item{
-  display:flex;
-  align-items:flex-start;
-  gap:11px;
-  padding:12px 4px;
-  border-bottom:1px solid var(--card-border);
-}
-
-.drink-item:first-child{
-  border-top:1px solid var(--card-border);
-}
-
-.drink-bullet{
-  flex:0 0 auto;
-  width:7px;
-  height:7px;
-  margin-top:7px;
-  border-radius:50%;
-  background:var(--tan);
-}
-
-.drink-content{
-  flex:1;
-  min-width:0;
-}
-
-.drink-name{
-  font-family:'Fraunces',serif;
-  font-size:16px;
-  font-weight:600;
-  color:var(--ink);
-  line-height:1.35;
-}
-
-.drink-note{
-  margin-top:3px;
-  font-family:'Inter',sans-serif;
-  font-size:11px;
-  line-height:1.5;
-  color:var(--tan-soft);
-}
-
-.drinks-note{
-  margin-top:6px;
-  padding-top:8px;
-  font-family:'Inter',sans-serif;
-  font-size:11px;
-  line-height:1.6;
-  text-align:center;
-  color:var(--tan-soft);
-}
-/* PROGRAM */
-
-.program-wrapper{
-  flex:1;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.program-image{
-  width:100%;
-  max-width:320px;
-  height:auto;
-
-  border-radius:10px;
-  margin-bottom:30px;
-
-  box-shadow:
-    0 0 20px rgba(255,255,255,0.8);
-}
-
-.timeline{
-  width:100%;
-}
-
-.timeline-row{
-  display:grid;
-  grid-template-columns:95px 1fr;
-
-  align-items:center;
-
-  padding:12px 0;
-}
-
-.timeline-time{
-  font-family:'Inter',sans-serif;
-  font-weight:700;
-  font-size:18px;
-
-  color:var(--tan);
-
-  border-right:1px solid var(--card-border);
-
-  padding-right:16px;
-}
-
-.map-image{
-  width:100%;
-  max-width:340px;
-  height:auto;
-
-  border-radius:10px;
-
-  box-shadow:
-    0 0 20px rgba(255,255,255,0.8);
-}
-
-.timeline-event{
-  padding-left:20px;
-
-  font-family:'Inter',sans-serif;
-  font-weight:500;
-
-  font-size:15px;
-  color:var(--ink);
-}
-</style>
+/* HOME HEADER /.brand{text-align;margin-bottom:30px;}.brand .eyebrow{font-family:'Inter',sans-serif;font-weight:800;font-size:11px;letter-spacing:0.22em;text-transform;color(--tan);margin-bottom:14px;}.brand h1{font-family:'Inter',sans-serif;font-weight:800;font-size(34px, 11vw, 46px);letter-spacing:0.01em;color(--ink);text-transform;line-height:1.02;}/ Ampersand v podpisovém písmu — jediné místo, kde se objevuje */.brand h1 .amp{display;font-family:'Alex Brush', cursive;font-weight:400;font-size:0.88em;text-transform;letter-spacing:0;line-height:1;color(--tan);margin:2px 0;}.countdown{margin-top:18px;text-align;font-family:'Inter',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.14em;text-transform;color(--ink);}.countdown .num{font-family:'Fraunces', serif;font-weight:700;font-style;font-size:17px;color(--tan);margin-right:5px;}
+
+.nav-stack{flex:1;display;flex-direction;justify-content;gap:14px;}.nav-btn{display;flex-direction;justify-content;align-items;
+
+width:100%;min-height:76px;
+
+padding:18px 16px;
+
+background(255,255,255,0.45);
+
+border:1.5px solid var(--card-border);border-radius:10px;
+
+font-family:'Inter',sans-serif;font-weight:800;font-size:16px;letter-spacing:0.06em;text-transform;color(--ink);
+
+text-align;cursor;
+
+-webkit-tap-highlight-color;
+
+box-shadow:0 0 20px rgba(255,255,255,0.9),0 0 35px rgba(255,255,255,0.55);}.nav-btn-bonus{min-height:95px;
+
+background:linear-gradient(180deg,rgba(255,255,255,0.70),rgba(255,255,255,0.45));
+
+box-shadow:0 0 22px rgba(255,255,255,0.95),0 0 40px rgba(255,255,255,0.60);}
+
+.bonus-title{display;
+
+font-family:'Inter',sans-serif;font-weight:800;font-size:20px;letter-spacing:0.08em;text-transform;
+
+color(--tan);}
+
+.bonus-subtitle{display;
+
+margin-top:6px;
+
+font-family:'Fraunces',serif;font-style;font-weight:500;
+
+font-size:15px;letter-spacing:0;
+
+text-transform;color(--ink);}.nav-btn{ background(--tan-fill); border-color(--tan); }.nav-btn .cap{display;font-family:'Inter',sans-serif;font-weight:800;font-size:11px;letter-spacing:0.16em;text-transform;color(--tan);margin-top:6px;}
+
+.signature{text-align;font-family:'Alex Brush', cursive;font-size:42px;color(--ink);margin-top:26px;}.datebar{text-align;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.14em;color(--tan-soft);text-transform;margin-top:8px;}.weather{display;flex-direction;align-items;text-align;margin-top:18px;}.weather-title{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform;color(--tan);margin-bottom:10px;}.weather-icon{font-size:28px;line-height:1;margin-bottom:6px;}
+
+.weather-temp{font-family:'Fraunces',serif;font-weight:700;font-size:22px;color(--tan);}
+
+.weather-rain{margin-top:4px;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.10em;text-transform;color(--tan-soft);}
+
+.weather-info{font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;letter-spacing:0.08em;text-transform;color(--tan-soft);}/* SUB PAGES */.backbtn{align-self;background;border;font-family:'Inter',sans-serif;font-weight:700;font-size:20px;letter-spacing:0.1em;text-transform;color(--tan);cursor;padding:6px 0;margin-bottom:24px;}.subtitle{font-family:'Inter',sans-serif;font-weight:800;font-size:32px;letter-spacing:-0.01em;color(--ink);text-transform;text-align;margin-bottom:30px;line-height:1.1;}
+
+/* SURPRISE / TEASER VIEW */.surprise{flex:1;display;flex-direction;align-items;justify-content;text-align;gap:18px;}.dots{ display; gap:10px; margin-bottom:6px; }.dot{width:16px; height:16px; border-radius:50%;}.d1{background(--y);} .d2{background(--o);} .d3{background(--p);}.d4{background(--pu);} .d5{background(--bl);} .d6{background(--g);}
+
+.surprise h2{font-family:'Fraunces', serif;font-weight:600;font-style;font-size:30px;color(--ink);line-height:1.15;}.surprise p{font-family:'Inter',sans-serif;font-size:13px;color(--tan);letter-spacing:0.04em;max-width:260px;}
+
+footer.mini{text-align;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.12em;color(--tan-soft);text-transform;margin-top;padding-top:24px;}/* KUDY NA SVATBU */
+
+.route-intro{font-family:'Inter',sans-serif;font-size:14px;line-height:1.7;color(--ink);margin-bottom:24px;text-align;}
+
+.route-links{display;flex-direction;gap:14px;}
+
+.route-card{display;align-items;gap:16px;
+
+padding:16px;
+
+border:1.5px solid var(--card-border);border-radius:10px;
+
+background(255,255,255,0.45);
+
+text-decoration;color(--ink);
+
+box-shadow:0 0 20px rgba(255,255,255,0.9),0 0 35px rgba(255,255,255,0.55);
+
+transition 0.2s ease;}
+
+.route-card{transform(-2px);}
+
+.route-card img{width:42px;height:42px;object-fit;}
+
+.route-card span{font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color(--ink);}/* QUIZ */#quizRoot{flex:1; display; flex-direction;}.q-progress-label{font-family:'Inter',sans-serif;font-weight:800;font-size:11px;letter-spacing:0.16em;text-transform;color(--tan);margin-bottom:10px;}.q-bar{height:3px;width:100%;background(--card-border);border-radius:3px;overflow;margin-bottom:28px;}.q-bar-fill{height:100%;background(--tan);border-radius:3px;transition 0.25s ease;}.q-text{font-family:'Fraunces', serif;font-weight:600;font-size:21px;line-height:1.3;color(--ink);margin-bottom:24px;min-height:80px;}.q-options{ display; flex-direction; gap:10px; margin-bottom:22px; }.q-opt{display;align-items;gap:12px;width:100%;padding:13px 14px;background;border:1.5px solid var(--card-border);border-radius:10px;font-family:'Inter',sans-serif;font-weight:500;font-size:14px;color(--ink);text-align;cursor;transform(1);transition 0.15s ease, border-color 0.15s ease, transform 0.15s ease;}.q-opt .letter{flex:0 0 auto;width:24px; height:24px;border-radius:50%;border:1.5px solid var(--card-border);display; align-items; justify-content;font-family:'Inter',sans-serif;font-weight:800;font-size:11px;color(--tan);}.q-opt.selected{background(--tan-fill);border-color(--tan);animation 0.28s ease;}.q-opt.selected .letter{background(--tan);border-color(--tan);color:#fff;}@keyframes pop{0%{transform(1);}45%{transform(1.035);}100%{transform(1);}}
+
+.q-nav{display;justify-content;align-items;margin-bottom:30px;}.q-nav button{background;border;font-family:'Inter',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.1em;text-transform;color(--tan);cursor;padding:8px 4px;}.q-nav button{ color(--card-border); cursor; }
+
+.q-jump{display;flex-wrap;gap:6px;justify-content;margin-bottom:20px;}.q-jump-dot{width:24px; height:24px;border-radius:50%;border:1.5px solid var(--card-border);background;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;color(--tan-soft);display; align-items; justify-content;cursor;}.q-jump-dot.answered{ background(--tan-soft); border-color(--tan-soft); color:#fff; }.q-jump-dot.current{ border-color(--ink); color(--ink); }
+
+.q-submit{margin-top;width:100%;padding:16px;background(--ink);color(--paper);border;border-radius:10px;font-family:'Inter',sans-serif;font-weight:800;font-size:14px;letter-spacing:0.1em;text-transform;cursor;}
+
+/* RESULT */.result{flex:1;display;flex-direction;align-items;justify-content;text-align;gap:16px;}.result-badge{width:128px; height:128px;border-radius:50%;display; align-items; justify-content;flex-direction;}.result-badge .pct{font-family:'Fraunces', serif;font-weight:700;font-size:34px;color:#fff;}.result-badge .pct-label{font-family:'Inter',sans-serif;font-weight:700;font-size:9px;letter-spacing:0.14em;text-transform;color(255,255,255,0.85);}.result h2{font-family:'Fraunces', serif;font-style;font-weight:600;font-size:24px;color(--ink);max-width:280px;line-height:1.25;margin-top:6px;}.result .sub{font-family:'Inter',sans-serif;font-size:12px;color(--tan);letter-spacing:0.04em;}.retry-btn{margin-top:10px;padding:14px 26px;background;border:1.5px solid var(--ink);border-radius:10px;font-family:'Inter',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.08em;text-transform;color(--ink);cursor;}.result-topics-title{font-family:'Inter',sans-serif;font-weight:800;font-size:11px;letter-spacing:0.14em;text-transform;color(--tan);text-align;margin-top:14px;margin-bottom:2px;}.result-topics{margin-top:2px;width:100%;display;flex-direction;gap:8px;text-align;}.topic-item{font-family:'Inter',sans-serif;font-size:13px;line-height:1.5;color(--ink);padding:10px 12px;border:1px solid var(--card-border);border-radius:8px;background(255,255,255,0.4);}
+
+/* SHARE BUTTON */.share-btn{margin-top:18px;width:100%;padding:19px 16px;background(180deg, #B79768, var(--tan));color:#fff;border;border-radius:12px;font-family:'Inter',sans-serif;font-weight:800;font-size:16px;letter-spacing:0.1em;text-transform;cursor;display;align-items;justify-content;gap:10px;box-shadow:0 6px 18px rgba(166,136,95,0.45),0 0 30px rgba(255,255,255,0.4);}.share-btn{ transform(1px); }.share-btn .icon{ font-size:19px; line-height:1; }.share-note{margin-top:4px;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.06em;color(--tan-soft);max-width:270px;}
+
+/* SCROLL TO TOP */.scroll-top-btn{position;right:18px;bottom:18px;width:48px;height:48px;border-radius:50%;background(--ink);color(--paper);border;display;align-items;justify-content;font-size:20px;font-family:'Inter',sans-serif;cursor;z-index:999;box-shadow:0 6px 18px rgba(0,0,0,0.28);-webkit-tap-highlight-color;}.scroll-top-btn.visible{ display; }
+
+/* LIVE PROGRAM PANEL /.live-program{display;flex-direction;padding:16px 18px;margin-bottom:26px;background(--ink);border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.18);cursor;}.live-program-main{display;align-items;gap:14px;min-width:0;}.live-dot-wrap{position;width:14px;height:14px;flex:0 0 auto;}.live-dot{position;inset:0;border-radius:50%;background:#8FC244;}.live-dot::before{content:'';position;inset:-6px;border-radius:50%;background(143,194,68,0.35);animation 1.6s ease-out infinite;}.live-program.is-upcoming .live-dot{ background(--tan-soft); }.live-program.is-upcoming .live-dot::before{ background(199,175,140,0.35); }@keyframes livepulse{0%{ transform(0.6); opacity:1; }100%{ transform(2); opacity:0; }}.live-program-text{ flex:1 1 auto; min-width:0; }.live-program-label{font-family:'Inter',sans-serif;font-weight:800;font-size:10px;letter-spacing:0.14em;text-transform;color(--tan-soft);margin-bottom:3px;}.live-program-event{font-family:'Fraunces', serif;font-weight:600;font-size(14px, 4.2vw, 17px);color(--paper);line-height:1.2;}.live-program-time{flex:0 0 auto;font-family:'Inter',sans-serif;font-weight:800;font-size:14px;color(--paper);background(255,255,255,0.14);padding:6px 10px;border-radius:8px;}/ Šipka naznačuje, že se panelem dá proklikat na celý program /.live-program-chevron{flex:0 0 auto;margin-left:4px;font-family:'Inter',sans-serif;font-size:16px;line-height:1;color(246,241,231,0.5);transition 0.18s ease, color 0.18s ease;}.live-program .live-program-chevron,.live-program .live-program-chevron{color(--paper);transform(3px);}.live-program.live-program{outline:2px solid var(--tan-soft);outline-offset:3px;}@media (prefers-reduced-motion: reduce){.live-program-chevron{ transition; }.live-program .live-program-chevron,.live-program .live-program-chevron{ transform; }}/ Nadcházející bod programu — samostatný řádek přes celou šířku,nikdy se nezalamuje (velikost písma dolaďuje fitLiveProgramNext()). */.live-program-next{display;margin-top:12px;padding-top:11px;border-top:1px solid rgba(246,241,231,0.16);font-family:'Inter',sans-serif;font-size:11px;line-height:1.35;letter-spacing:0.02em;color(--tan-soft);white-space;overflow;text-overflow;}.live-program-next .next-label{font-weight:800;letter-spacing:0.12em;text-transform;font-size:0.85em;margin-right:7px;color(--tan-soft);}.live-program-next .next-time{font-weight:700;color(--paper);margin-right:6px;}.live-program-next .next-event{color(246,241,231,0.78);}@media (max-width:360px){.card{ padding:34px 18px; }.live-program{ padding:14px 14px; }.live-program-main{ gap:10px; }.live-program-time{ padding:5px 8px; font-size:13px; }}
+
+/* CO SI OBLÉCT */
+
+.dress-palette{display;justify-content;flex-wrap;gap:14px;margin-top:12px;}
+
+.palette-color{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);
+
+box-shadow:0 0 15px rgba(255,255,255,0.9),0 0 30px rgba(255,255,255,0.5);}/* NÁPOJOVÝ LÍSTEK */
+
+.drinks-page{flex:1;overflow-y;padding-right:4px;padding-bottom:10px;}
+
+.drinks-intro{font-family:'Inter',sans-serif;font-size:14px;line-height:1.7;color(--ink);text-align;margin-bottom:30px;}
+
+.drinks-category{margin-bottom:30px;}
+
+.drinks-category-header{display;align-items;gap:10px;margin-bottom:14px;}
+
+.drinks-category-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto;}
+
+.drinks-category-title{font-family:'Fraunces',serif;font-size:21px;font-weight:600;font-style;color(--tan);line-height:1.2;}
+
+.drinks-list{display;flex-direction;gap:0;}
+
+.drink-item{display;align-items;gap:11px;padding:12px 4px;border-bottom:1px solid var(--card-border);}
+
+.drink-item{border-top:1px solid var(--card-border);}
+
+.drink-bullet{flex:0 0 auto;width:7px;height:7px;margin-top:7px;border-radius:50%;background(--tan);}
+
+.drink-content{flex:1;min-width:0;}
+
+.drink-name{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color(--ink);line-height:1.35;}
+
+.drink-note{margin-top:3px;font-family:'Inter',sans-serif;font-size:11px;line-height:1.5;color(--tan-soft);}
+
+.drinks-note{margin-top:6px;padding-top:8px;font-family:'Inter',sans-serif;font-size:11px;line-height:1.6;text-align;color(--tan-soft);}/* PROGRAM */
+
+.program-wrapper{flex:1;
+
+display;align-items;justify-content;}
+
+.program-image{width:100%;max-width:320px;height;
+
+border-radius:10px;margin-bottom:30px;
+
+box-shadow:0 0 20px rgba(255,255,255,0.8);}
+
+.timeline{width:100%;}
+
+.timeline-row{display;grid-template-columns:95px 1fr;
+
+align-items;
+
+padding:12px 0;}
+
+.timeline-time{font-family:'Inter',sans-serif;font-weight:700;font-size:18px;
+
+color(--tan);
+
+border-right:1px solid var(--card-border);
+
+padding-right:16px;}
+
+.map-image{width:100%;max-width:340px;height;
+
+border-radius:10px;
+
+box-shadow:0 0 20px rgba(255,255,255,0.8);}
+
+.timeline-event{padding-left:20px;
+
+font-family:'Inter',sans-serif;font-weight:500;
+
+font-size:15px;color(--ink);}</style>
+
 </head>
 <body>
 
 <div class="card">
 
   <!-- HOME -->
-    <div class="view active" id="view-home">
-    <div class="brand">
-      <div class="eyebrow">Svatba · 12. září 2026</div>
-      <h1>Tereza<span class="amp">&amp;</span>Ondřej</h1>
-      <div class="countdown" id="countdown"></div>
-    </div>
+
+<div class="view active" id="view-home">
+<div class="brand">
+  <div class="eyebrow">Svatba · 12. září 2026</div>
+  <h1>Tereza<span class="amp">&amp;</span>Ondřej</h1>
+  <div class="countdown" id="countdown"></div>
+</div>
 
 <div class="nav-stack">
   <button class="nav-btn" onclick="go('pred')">
@@ -1035,11 +261,12 @@
 
 </div>
 
-    <footer class="mini">Tereza &amp; Ondřej — 2026</footer>
+<footer class="mini">Tereza &amp; Ondřej — 2026</footer>
 
   </div>
 
   <!-- PŘED SVATBOU submenu -->
+
   <div class="view" id="view-pred">
     <button class="backbtn" onclick="go('home')">← Zpět</button>
     <div class="subtitle">Před svatbou</div>
@@ -1053,7 +280,7 @@
   <!-- KUDY NA SVATBU -->
 <div class="view" id="view-kudy">
 
-  <button class="backbtn" onclick="go('pred')">← Zpět</button>
+<button class="backbtn" onclick="go('pred')">← Zpět</button>
 
   <div class="subtitle">Kudy na svatbu</div>
 
@@ -1064,35 +291,35 @@
 
   <div class="route-links">
 
-    <a class="route-card"
-       href="https://mapy.com/s/logunetome"
-       target="_blank">
+<a class="route-card"
+   href="https://mapy.com/s/logunetome"
+   target="_blank">
 
-      <img src="img/mapycz.png" alt="Mapy.cz">
+  <img src="img/mapycz.png" alt="Mapy.cz">
 
-      <span>Mapy.cz</span>
+  <span>Mapy.cz</span>
 
-    </a>
+</a>
 
-    <a class="route-card"
-       href="https://maps.app.goo.gl/NCYqGnKk6yoZVZ298"
-       target="_blank">
+<a class="route-card"
+   href="https://maps.app.goo.gl/NCYqGnKk6yoZVZ298"
+   target="_blank">
 
-      <img src="img/googlemaps.png" alt="Google Maps">
+  <img src="img/googlemaps.png" alt="Google Maps">
 
-      <span>Google Maps</span>
+  <span>Google Maps</span>
 
-    </a>
+</a>
 
-    <a class="route-card"
-       href="https://ul.waze.com/ul?place=ChIJAX1T2BFLCUcRiEOu3cvJFeM&ll=50.64713280%2C15.07306480&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location"
-       target="_blank">
+<a class="route-card"
+   href="https://ul.waze.com/ul?place=ChIJAX1T2BFLCUcRiEOu3cvJFeM&ll=50.64713280%2C15.07306480&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location"
+   target="_blank">
 
-      <img src="img/waze.png" alt="Waze">
+  <img src="img/waze.png" alt="Waze">
 
-      <span>Waze</span>
+  <span>Waze</span>
 
-    </a>
+</a>
 
   </div>
 
@@ -1103,25 +330,26 @@
 <!-- CO SI OBLÉCT -->
 <div class="view" id="view-obleceni">
 
-  <button class="backbtn" onclick="go('pred')">← Zpět</button>
+<button class="backbtn" onclick="go('pred')">← Zpět</button>
 
   <div class="subtitle">Co si obléct</div>
 
   <div class="route-intro">
     Budeme rádi za ladění do odstínů naší palety.<br>
 
-    Volba outfitu je však zcela na vás – doražte v tom,
-    v čem je vám nejlépe.
+Volba outfitu je však zcela na vás – doražte v tom,
+v čem je vám nejlépe.
+
   </div>
 
   <div class="dress-palette">
 
-    <div class="palette-color" style="background:#F0C43D"></div>
-    <div class="palette-color" style="background:#E36225"></div>
-    <div class="palette-color" style="background:#E85C88"></div>
-    <div class="palette-color" style="background:#A15FC9"></div>
-    <div class="palette-color" style="background:#6FB3E0"></div>
-    <div class="palette-color" style="background:#8FC244"></div>
+<div class="palette-color" style="background:#F0C43D"></div>
+<div class="palette-color" style="background:#E36225"></div>
+<div class="palette-color" style="background:#E85C88"></div>
+<div class="palette-color" style="background:#A15FC9"></div>
+<div class="palette-color" style="background:#6FB3E0"></div>
+<div class="palette-color" style="background:#8FC244"></div>
 
   </div>
 
@@ -1133,7 +361,7 @@
 <!-- PROGRAM -->
 <div class="view" id="view-program">
 
-  <button class="backbtn" onclick="go('pred')">← Zpět</button>
+<button class="backbtn" onclick="go('pred')">← Zpět</button>
 
 <div class="subtitle">Program</div>
 
@@ -1152,27 +380,28 @@
 </div>
 
 <!-- FOTKY INFO -->
+
 <div class="view" id="view-fotky">
 
-  <button class="backbtn" onclick="go('na')">← Zpět</button>
+<button class="backbtn" onclick="go('na')">← Zpět</button>
 
   <div class="subtitle">Fotky info</div>
 
   <div class="route-intro">
 
-    Na svatbě s námi bude skvělá fotografka, která se postará o zachycení všech důležitých okamžiků. Budeme moc rádi, když během obřadu a dalších klíčových momentů odložíte telefony i fotoaparáty a užijete si vše naplno společně s námi.
+Na svatbě s námi bude skvělá fotografka, která se postará o zachycení všech důležitých okamžiků. Budeme moc rádi, když během obřadu a dalších klíčových momentů odložíte telefony i fotoaparáty a užijete si vše naplno společně s námi.
 
-    <br><br>
+<br><br>
 
-    Pokud však během dne zachytíte nějaké povedené momentky, budeme nadšení, když se o ně s námi podělíte prostřednictvím odkazu níže.
+Pokud však během dne zachytíte nějaké povedené momentky, budeme nadšení, když se o ně s námi podělíte prostřednictvím odkazu níže.
 
-    <br><br>
+<br><br>
 
-    <a href="https://photos.app.goo.gl/kHPrToNWSzXLn2uy9"
-       target="_blank"
-       style="color:var(--tan); font-weight:700;">
-      Otevřít sdílené album
-    </a>
+<a href="https://photos.app.goo.gl/kHPrToNWSzXLn2uy9"
+   target="_blank"
+   style="color:var(--tan); font-weight:700;">
+  Otevřít sdílené album
+</a>
 
   </div>
 
@@ -1184,21 +413,21 @@
 <!-- ODVOZ ZE SVATBY -->
 <div class="view" id="view-odvoz">
 
-  <button class="backbtn" onclick="go('na')">← Zpět</button>
+<button class="backbtn" onclick="go('na')">← Zpět</button>
 
   <div class="subtitle">Odvoz ze svatby</div>
 
   <div class="route-intro">
 
-    Ať si můžete svatební den užít naplno, zajistili jsme pro vás odvoz domů.
+Ať si můžete svatební den užít naplno, zajistili jsme pro vás odvoz domů.
 
-    <br><br>
+<br><br>
 
-    Pokud budete chtít odvézt, kontaktujte prosím našeho řidiče na telefonním čísle:
+Pokud budete chtít odvézt, kontaktujte prosím našeho řidiče na telefonním čísle:
 
-    <br><br>
+<br><br>
 
-    <span style="color:var(--tan); font-weight:700;">📞 +420 XXX XXX XXX</span>
+<span style="color:var(--tan); font-weight:700;">📞 +420 XXX XXX XXX</span>
 
   </div>
 
@@ -1209,18 +438,19 @@
 </div>
 
 <!-- MAPKA AREÁLU -->
+
 <div class="view" id="view-mapka">
 
-  <button class="backbtn" onclick="go('na')">← Zpět</button>
+<button class="backbtn" onclick="go('na')">← Zpět</button>
 
   <div class="subtitle">Mapka areálu</div>
 
   <div style="text-align:center;">
 
-    <img
-      src="img/mapka.png"
-      alt="Mapka areálu"
-      class="program-image">
+<img
+  src="img/mapka.png"
+  alt="Mapka areálu"
+  class="program-image">
 
   </div>
 
@@ -1230,24 +460,28 @@
 
 </div>
 
-
+<!-- NÁPOJOVÝ LÍSTEK -->
 
 <!-- NÁPOJOVÝ LÍSTEK -->
+
 <div class="view" id="view-napoje">
 
-  <button class="backbtn" onclick="go('na')">← Zpět</button>
+<button class="backbtn" onclick="go('na')">← Zpět</button>
 
   <div class="subtitle">Nápojový lístek</div>
 
   <div class="drinks-page">
 
-    <div class="drinks-intro">
-      Během svatebního dne pro vás bude připraven výběr
-      oblíbených nápojů. Stačí si vybrat, na co máte chuť.
-    </div>
+<div class="drinks-intro">
+  Během svatebního dne pro vás bude připraven výběr
+  oblíbených nápojů. Stačí si vybrat, na co máte chuť.
+</div>
 
-    <div id="drinkMenu"></div>
+<div id="drinkMenu"></div>
 
+<div class="drinks-note">
+  Nabídku budeme průběžně doplňovat.
+</div>
 
   </div>
 
@@ -1255,12 +489,21 @@
     Tereza &amp; Ondřej — 2026
   </footer>
 
+</div>
 
+<h2>Nechte se<br>překvapit</h2>
+
+<p>Tahle část se právě chystá. Brzy tu najdete víc.</p>
+
+  </div>
+
+</div>
 
   <!-- NA SVATBĚ -->
+
 <div class="view" id="view-na">
 
-  <button class="backbtn" onclick="go('home')">← Zpět</button>
+<button class="backbtn" onclick="go('home')">← Zpět</button>
 
   <div class="subtitle">Svatba</div>
 
@@ -1285,22 +528,22 @@
 
   <div class="nav-stack">
 
-    <button class="nav-btn" onclick="go('fotky')">
-      Fotky info
-    </button>
+<button class="nav-btn" onclick="go('fotky')">
+  Fotky info
+</button>
 
-    <button class="nav-btn" onclick="go('mapka')">
-      Mapka areálu
-    </button>
+<button class="nav-btn" onclick="go('mapka')">
+  Mapka areálu
+</button>
 
-    <button class="nav-btn" onclick="go('napoje')">
-      Nápojový lístek
-    </button>
+<button class="nav-btn" onclick="go('napoje')">
+  Nápojový lístek
+</button>
 
-    <button class="nav-btn" onclick="go('odvoz')">
-      Odvoz ze svatby
-    </button>
-    
+<button class="nav-btn" onclick="go('odvoz')">
+  Odvoz ze svatby
+</button>
+
   </div>
 
   <footer class="mini">
@@ -1310,15 +553,21 @@
 </div>
 
   <!-- SURPRISE for "před svatbou" sub-items -->
+
   <div class="view" id="view-surprise-pred">
     <button class="backbtn" onclick="go('pred')">← Zpět</button>
     <div class="surprise">
       <div class="dots">
         <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
         <div class="dot d4"></div><div class="dot d5"></div><div class="dot d6"></div>
+      </div>
+      <h2>Nechte se<br>překvapit</h2>
+      <p>Tahle část se právě chystá. Brzy tu najdete víc.</p>
+    </div>
   </div>
 
   <!-- KVÍZ -->
+
   <div class="view" id="view-kviz">
     <button class="backbtn" onclick="go('home')">← Zpět</button>
     <div id="quizRoot"></div>
