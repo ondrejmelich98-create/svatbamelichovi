@@ -1286,7 +1286,7 @@
 
 
 
-<!-- NÁPOJOVÝ LÍSTEK -->
+<!-- NÁPOJOVÝ LÍSTEK — rozcestník -->
 <div class="view" id="view-napoje">
 
   <button class="backbtn" onclick="go('na')">← Zpět</button>
@@ -1298,8 +1298,50 @@
     Kdyby vám něco chybělo, stačí říct u baru.
   </div>
 
-  <div class="drinks" id="drinkMenu">
-    <!-- generuje se automaticky z pole drinkMenu v <script> -->
+  <div class="nav-stack">
+
+    <button class="nav-btn" onclick="go('napoje-alko')">
+      Alko
+    </button>
+
+    <button class="nav-btn" onclick="go('napoje-nealko')">
+      Nealko
+    </button>
+
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
+
+<!-- NÁPOJOVÝ LÍSTEK — ALKO -->
+<div class="view" id="view-napoje-alko">
+
+  <button class="backbtn" onclick="go('napoje')">← Zpět</button>
+
+  <div class="subtitle">Alko</div>
+
+  <div class="drinks" id="drinkMenuAlko">
+    <!-- generuje se automaticky z pole drinkMenuAlko v <script> -->
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
+
+<!-- NÁPOJOVÝ LÍSTEK — NEALKO -->
+<div class="view" id="view-napoje-nealko">
+
+  <button class="backbtn" onclick="go('napoje')">← Zpět</button>
+
+  <div class="subtitle">Nealko</div>
+
+  <div class="drinks" id="drinkMenuNealko">
+    <!-- generuje se automaticky z pole drinkMenuNealko v <script> -->
   </div>
 
   <footer class="mini">
@@ -1592,12 +1634,13 @@
   renderProgramTimeline();
 /* ---------- NÁPOJOVÝ LÍSTEK ----------
      Jediné místo, kde se mění nabídka nápojů.
+     Alko a nealko jsou dvě samostatná pole — každé se vypisuje na své stránce.
      Přidání položky = jeden řádek v "items":
         {name:"Fernet Stock"}                     — jen název
         {name:"Fernet Stock", note:"s tonikem"}   — název + poznámka vpravo
      Přidání celé kategorie = nový blok {title, color, note, items}.
      Barvy: --y žlutá, --o oranžová, --p růžová, --pu fialová, --bl modrá, --g zelená */
-  const drinkMenu = [
+  const drinkMenuAlko = [
     {
       title:"Celodenní pití",
       color:"var(--g)",
@@ -1624,23 +1667,27 @@
         {name:"Finlandia", note:"vodka"}
       ]
     }
-    /* Až budete chtít přidat nealko, stačí odkomentovat:
-    ,{
-      title:"Nealko",
-      color:"var(--bl)",
-      items:[
-        {name:"Voda, limonády"},
-        {name:"Káva a čaj"}
-      ]
-    }
-    */
   ];
 
-  function renderDrinkMenu(){
-    const container = document.getElementById('drinkMenu');
+  const drinkMenuNealko = [
+    {
+      title:"Nealko",
+      color:"var(--bl)",
+      note:"K dispozici po celý den",
+      items:[
+        {name:"Voda s citrónem"},
+        {name:"Jablečný mošt"},
+        {name:"Ovocný džus"},
+        {name:"Coca-Cola"}
+      ]
+    }
+  ];
+
+  function renderDrinkMenu(containerId, groups){
+    const container = document.getElementById(containerId);
     if(!container) return;
 
-    container.innerHTML = drinkMenu.map(group => `
+    container.innerHTML = groups.map(group => `
       <div class="drink-group">
         <div class="drink-group-head">
           <span class="drink-dot" style="background:${group.color || 'var(--tan)'}"></span>
@@ -1661,7 +1708,8 @@
       </div>
     `).join('');
   }
-  renderDrinkMenu();
+  renderDrinkMenu('drinkMenuAlko', drinkMenuAlko);
+  renderDrinkMenu('drinkMenuNealko', drinkMenuNealko);
   function programItemDateTime(item){
     const [h, m] = item.time.split(':').map(Number);
     return new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY, h, m, 0, 0);
