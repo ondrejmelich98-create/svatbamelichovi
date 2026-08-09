@@ -816,7 +816,108 @@
     0 0 15px rgba(255,255,255,0.9),
     0 0 30px rgba(255,255,255,0.5);
 }
+/* NÁPOJOVÝ LÍSTEK */
 
+.drinks-page{
+  flex:1;
+  overflow-y:auto;
+  padding-right:4px;
+  padding-bottom:10px;
+}
+
+.drinks-intro{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  line-height:1.7;
+  color:var(--ink);
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.drinks-category{
+  margin-bottom:30px;
+}
+
+.drinks-category-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.drinks-category-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  flex:0 0 auto;
+}
+
+.drinks-category-title{
+  font-family:'Fraunces',serif;
+  font-size:21px;
+  font-weight:600;
+  font-style:italic;
+  color:var(--tan);
+  line-height:1.2;
+}
+
+.drinks-list{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+
+.drink-item{
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  padding:12px 4px;
+  border-bottom:1px solid var(--card-border);
+}
+
+.drink-item:first-child{
+  border-top:1px solid var(--card-border);
+}
+
+.drink-bullet{
+  flex:0 0 auto;
+  width:7px;
+  height:7px;
+  margin-top:7px;
+  border-radius:50%;
+  background:var(--tan);
+}
+
+.drink-content{
+  flex:1;
+  min-width:0;
+}
+
+.drink-name{
+  font-family:'Fraunces',serif;
+  font-size:16px;
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.35;
+}
+
+.drink-note{
+  margin-top:3px;
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  line-height:1.5;
+  color:var(--tan-soft);
+}
+
+.drinks-note{
+  margin-top:6px;
+  padding-top:8px;
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  line-height:1.6;
+  text-align:center;
+  color:var(--tan-soft);
+}
 /* PROGRAM */
 
 .program-wrapper{
@@ -1131,15 +1232,33 @@
 
 
 <!-- NÁPOJOVÝ LÍSTEK -->
+<!-- NÁPOJOVÝ LÍSTEK -->
 <div class="view" id="view-napoje">
 
   <button class="backbtn" onclick="go('na')">← Zpět</button>
 
-  <div class="surprise">
-    <div class="dots">
-      <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
-      <div class="dot d4"></div><div class="dot d5"></div><div class="dot d6"></div>
+  <div class="subtitle">Nápojový lístek</div>
+
+  <div class="drinks-page">
+
+    <div class="drinks-intro">
+      Během svatebního dne pro vás bude připraven výběr
+      oblíbených nápojů. Stačí si vybrat, na co máte chuť.
     </div>
+
+    <div id="drinkMenu"></div>
+
+    <div class="drinks-note">
+      Nabídku budeme průběžně doplňovat.
+    </div>
+
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
+
+</div>
 
     <h2>Nechte se<br>překvapit</h2>
 
@@ -1242,6 +1361,104 @@
      Jediný zdroj pravdy pro časy a názvy bodů programu.
      Používá ho jak stránka "Před svatbou → Program" (výpis časové osy),
      tak "živý" ukazatel v sekci "Svatba" — takže vždy zobrazují stejné údaje. */
+  /* ---------- NÁPOJOVÝ LÍSTEK ----------
+   Pro přidání dalšího nápoje stačí přidat
+   další položku do příslušné kategorie.
+   
+   name = název nápoje
+   note = volitelná poznámka
+*/
+
+const drinkMenu = [
+
+  {
+    category: "Celodenní pití",
+    color: "var(--g)",
+    items: [
+      { name: "Pilsner Urquell 12" },
+      { name: "Prosecco" }
+    ]
+  },
+
+  {
+    category: "Míchané drinky",
+    color: "var(--p)",
+    items: [
+      { name: "Gin a Tonic" },
+      { name: "Skinny Bitch", note: "vodka + soda" }
+    ]
+  },
+
+  {
+    category: "Ostatní tvrdé pití",
+    color: "var(--o)",
+    items: [
+      { name: "Mandlovice", note: "ve velkém počtu" },
+      { name: "Jägermeister" },
+      { name: "Finlandia", note: "vodka" }
+    ]
+  }
+
+];
+
+function renderDrinkMenu(){
+
+  const container = document.getElementById('drinkMenu');
+
+  if(!container) return;
+
+  container.innerHTML = drinkMenu.map(category => `
+
+    <section class="drinks-category">
+
+      <div class="drinks-category-header">
+
+        <span
+          class="drinks-category-dot"
+          style="background:${category.color}">
+        </span>
+
+        <div class="drinks-category-title">
+          ${category.category}
+        </div>
+
+      </div>
+
+      <div class="drinks-list">
+
+        ${category.items.map(drink => `
+
+          <div class="drink-item">
+
+            <span class="drink-bullet"></span>
+
+            <div class="drink-content">
+
+              <div class="drink-name">
+                ${drink.name}
+              </div>
+
+              ${
+                drink.note
+                  ? `<div class="drink-note">${drink.note}</div>`
+                  : ''
+              }
+
+            </div>
+
+          </div>
+
+        `).join('')}
+
+      </div>
+
+    </section>
+
+  `).join('');
+}
+
+renderDrinkMenu();
+
   const weddingProgram = [
     {time:"10:00", label:"PŘÍCHOD HOSTŮ"},
     {time:"11:00", label:"SVATEBNÍ OBŘAD"},
