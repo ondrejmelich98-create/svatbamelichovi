@@ -884,6 +884,106 @@
   font-size:15px;
   color:var(--ink);
 }
+/* NÁPOJOVÝ LÍSTEK */
+
+  .drinks{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .drink-group{
+    padding:18px 16px 14px;
+
+    border:1.5px solid var(--card-border);
+    border-radius:10px;
+
+    background:rgba(255,255,255,0.45);
+
+    box-shadow:
+      0 0 20px rgba(255,255,255,0.9),
+      0 0 35px rgba(255,255,255,0.55);
+  }
+
+  .drink-group-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .drink-dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    flex:0 0 auto;
+  }
+
+  .drink-group-title{
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--tan);
+  }
+
+  .drink-group-note{
+    margin-top:5px;
+    padding-left:22px;
+
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--tan-soft);
+  }
+
+  .drink-rule{
+    height:1px;
+    background:var(--card-border);
+    margin:12px 0 2px;
+  }
+
+  .drink-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+
+    padding:11px 0;
+    border-bottom:1px dashed var(--card-border);
+  }
+
+  .drink-item:last-child{
+    border-bottom:none;
+    padding-bottom:2px;
+  }
+
+  .drink-name{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--ink);
+  }
+
+  .drink-note{
+    flex:0 0 auto;
+    text-align:right;
+
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--tan-soft);
+  }
+
+  .drink-empty{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--tan-soft);
+    padding:11px 0 2px;
+  }  
 </style>
 </head>
 <body>
@@ -1130,21 +1230,26 @@
 </div>
 
 
+
 <!-- NÁPOJOVÝ LÍSTEK -->
 <div class="view" id="view-napoje">
 
   <button class="backbtn" onclick="go('na')">← Zpět</button>
 
-  <div class="surprise">
-    <div class="dots">
-      <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
-      <div class="dot d4"></div><div class="dot d5"></div><div class="dot d6"></div>
-    </div>
+  <div class="subtitle">Nápojový lístek</div>
 
-    <h2>Nechte se<br>překvapit</h2>
-
-    <p>Tahle část se právě chystá. Brzy tu najdete víc.</p>
+  <div class="route-intro">
+    Přehled toho, co se bude během dne nalévat.<br>
+    Kdyby vám něco chybělo, stačí říct u baru.
   </div>
+
+  <div class="drinks" id="drinkMenu">
+    <!-- generuje se automaticky z pole drinkMenu v <script> -->
+  </div>
+
+  <footer class="mini">
+    Tereza &amp; Ondřej — 2026
+  </footer>
 
 </div>
 
@@ -1430,7 +1535,78 @@
     `).join('');
   }
   renderProgramTimeline();
+/* ---------- NÁPOJOVÝ LÍSTEK ----------
+     Jediné místo, kde se mění nabídka nápojů.
+     Přidání položky = jeden řádek v "items":
+        {name:"Fernet Stock"}                     — jen název
+        {name:"Fernet Stock", note:"s tonikem"}   — název + poznámka vpravo
+     Přidání celé kategorie = nový blok {title, color, note, items}.
+     Barvy: --y žlutá, --o oranžová, --p růžová, --pu fialová, --bl modrá, --g zelená */
+  const drinkMenu = [
+    {
+      title:"Celodenní pití",
+      color:"var(--g)",
+      note:"K dispozici po celý den",
+      items:[
+        {name:"Pilsner Urquell 12°"},
+        {name:"Prosecco"}
+      ]
+    },
+    {
+      title:"Míchané drinky",
+      color:"var(--p)",
+      items:[
+        {name:"Gin &amp; Tonic"},
+        {name:"Skinny Bitch", note:"vodka + soda"}
+      ]
+    },
+    {
+      title:"Ostatní tvrdé pití",
+      color:"var(--o)",
+      items:[
+        {name:"Mandlovice", note:"ve velkém počtu"},
+        {name:"Jägermeister"},
+        {name:"Finlandia", note:"vodka"}
+      ]
+    }
+    /* Až budete chtít přidat nealko, stačí odkomentovat:
+    ,{
+      title:"Nealko",
+      color:"var(--bl)",
+      items:[
+        {name:"Voda, limonády"},
+        {name:"Káva a čaj"}
+      ]
+    }
+    */
+  ];
 
+  function renderDrinkMenu(){
+    const container = document.getElementById('drinkMenu');
+    if(!container) return;
+
+    container.innerHTML = drinkMenu.map(group => `
+      <div class="drink-group">
+        <div class="drink-group-head">
+          <span class="drink-dot" style="background:${group.color || 'var(--tan)'}"></span>
+          <span class="drink-group-title">${group.title}</span>
+        </div>
+        ${group.note ? `<div class="drink-group-note">${group.note}</div>` : ''}
+        <div class="drink-rule"></div>
+        ${
+          group.items && group.items.length
+            ? group.items.map(item => `
+                <div class="drink-item">
+                  <span class="drink-name">${item.name}</span>
+                  ${item.note ? `<span class="drink-note">${item.note}</span>` : ''}
+                </div>
+              `).join('')
+            : `<div class="drink-empty">Ještě doplníme.</div>`
+        }
+      </div>
+    `).join('');
+  }
+  renderDrinkMenu();
   function programItemDateTime(item){
     const [h, m] = item.time.split(':').map(Number);
     return new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY, h, m, 0, 0);
