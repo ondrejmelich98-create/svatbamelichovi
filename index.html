@@ -47,27 +47,40 @@
   /* HOME HEADER */
   .brand{
     text-align:center;
-    margin-bottom:34px;
+    margin-bottom:30px;
+  }
+  .brand .eyebrow{
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--tan);
+    margin-bottom:14px;
   }
   .brand h1{
     font-family:'Inter',sans-serif;
     font-weight:800;
-    font-size:44px;
+    font-size:clamp(34px, 11vw, 46px);
     letter-spacing:0.01em;
     color:var(--ink);
     text-transform:uppercase;
-    line-height:1;
+    line-height:1.02;
   }
-    .brand .date{
-    margin-top:10px;
-    font-family:'Fraunces', serif;
-    font-weight:500;
-    font-style:italic;
-    font-size:19px;
+  /* Ampersand v podpisovém písmu — jediné místo, kde se objevuje */
+  .brand h1 .amp{
+    display:block;
+    font-family:'Alex Brush', cursive;
+    font-weight:400;
+    font-size:0.88em;
+    text-transform:none;
+    letter-spacing:0;
+    line-height:1;
     color:var(--tan);
+    margin:2px 0;
   }
   .countdown{
-    margin-top:16px;
+    margin-top:18px;
     text-align:center;
     font-family:'Inter',sans-serif;
     font-weight:800;
@@ -719,6 +732,31 @@
     padding:6px 10px;
     border-radius:8px;
   }
+  /* Šipka naznačuje, že se panelem dá proklikat na celý program */
+  .live-program-chevron{
+    flex:0 0 auto;
+    margin-left:4px;
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1;
+    color:rgba(246,241,231,0.5);
+    transition:transform 0.18s ease, color 0.18s ease;
+  }
+  .live-program:hover .live-program-chevron,
+  .live-program:active .live-program-chevron{
+    color:var(--paper);
+    transform:translateX(3px);
+  }
+  .live-program:active{ background:#221f1b; }
+  .live-program:focus-visible{
+    outline:2px solid var(--tan-soft);
+    outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .live-program-chevron{ transition:none; }
+    .live-program:hover .live-program-chevron,
+    .live-program:active .live-program-chevron{ transform:none; }
+  }
   /* Nadcházející bod programu — samostatný řádek přes celou šířku,
      nikdy se nezalamuje (velikost písma dolaďuje fitLiveProgramNext()). */
   .live-program-next{
@@ -855,9 +893,9 @@
   <!-- HOME -->
     <div class="view active" id="view-home">
     <div class="brand">
-      <h1>Svatba</h1>
-      <div class="date">12. září 2026</div>
-      <div class="signature">Tereza + Ondřej</div>
+      <div class="eyebrow">Svatba · 12. září 2026</div>
+      <h1>Tereza<span class="amp">&amp;</span>Ondřej</h1>
+      <div class="countdown" id="countdown"></div>
     </div>
 
 <div class="nav-stack">
@@ -874,7 +912,6 @@
     <span class="bonus-subtitle">Jak moc dobře znáš novomanžele?</span>
   </button>
 </div>
-    <div class="countdown" id="countdown"></div>
     <div class="weather" id="weather">
 
   <div class="weather-title" id="weatherTitle">
@@ -897,6 +934,7 @@
 
 </div>
 
+    <footer class="mini">Tereza &amp; Ondřej — 2026</footer>
 
   </div>
 
@@ -1117,7 +1155,11 @@
 
   <div class="subtitle">Svatba</div>
 
-  <div class="live-program is-upcoming" id="liveProgram" onclick="go('program')">
+  <div class="live-program is-upcoming" id="liveProgram"
+       role="button" tabindex="0"
+       aria-label="Zobrazit celý program"
+       onclick="go('program')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();go('program');}">
     <div class="live-program-main">
       <div class="live-dot-wrap"><span class="live-dot"></span></div>
       <div class="live-program-text">
@@ -1125,6 +1167,7 @@
         <div class="live-program-event" id="liveProgramEvent">PŘÍCHOD HOSTŮ</div>
       </div>
       <div class="live-program-time" id="liveProgramTime">10:00</div>
+      <span class="live-program-chevron" aria-hidden="true">→</span>
     </div>
     <div class="live-program-next" id="liveProgramNext" style="display:none;">
       <span class="next-label">Dále</span><span class="next-time" id="liveProgramNextTime"></span><span class="next-event" id="liveProgramNextEvent"></span>
