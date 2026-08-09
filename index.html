@@ -652,14 +652,19 @@
   /* LIVE PROGRAM PANEL */
   .live-program{
     display:flex;
-    align-items:center;
-    gap:14px;
+    flex-direction:column;
     padding:16px 18px;
     margin-bottom:26px;
     background:var(--ink);
     border-radius:12px;
     box-shadow:0 6px 18px rgba(0,0,0,0.18);
     cursor:pointer;
+  }
+  .live-program-main{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
   }
   .live-dot-wrap{
     position:relative;
@@ -687,7 +692,7 @@
     0%{ transform:scale(0.6); opacity:1; }
     100%{ transform:scale(2); opacity:0; }
   }
-  .live-program-text{ flex:1; min-width:0; }
+  .live-program-text{ flex:1 1 auto; min-width:0; }
   .live-program-label{
     font-family:'Inter',sans-serif;
     font-weight:800;
@@ -700,9 +705,9 @@
   .live-program-event{
     font-family:'Fraunces', serif;
     font-weight:600;
-    font-size:16px;
+    font-size:clamp(14px, 4.2vw, 17px);
     color:var(--paper);
-    line-height:1.25;
+    line-height:1.2;
   }
   .live-program-time{
     flex:0 0 auto;
@@ -714,29 +719,43 @@
     padding:6px 10px;
     border-radius:8px;
   }
+  /* Nadcházející bod programu — samostatný řádek přes celou šířku,
+     nikdy se nezalamuje (velikost písma dolaďuje fitLiveProgramNext()). */
   .live-program-next{
-    margin-top:8px;
+    display:block;
+    margin-top:12px;
+    padding-top:11px;
+    border-top:1px solid rgba(246,241,231,0.16);
     font-family:'Inter',sans-serif;
     font-size:11px;
-    letter-spacing:0.04em;
+    line-height:1.35;
+    letter-spacing:0.02em;
     color:var(--tan-soft);
-    line-height:1.3;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
   .live-program-next .next-label{
     font-weight:800;
-    letter-spacing:0.1em;
+    letter-spacing:0.12em;
     text-transform:uppercase;
-    font-size:9px;
-    margin-right:4px;
+    font-size:0.85em;
+    margin-right:7px;
     color:var(--tan-soft);
   }
   .live-program-next .next-time{
     font-weight:700;
     color:var(--paper);
-    margin-right:4px;
+    margin-right:6px;
   }
   .live-program-next .next-event{
-    color:rgba(246,241,231,0.75);
+    color:rgba(246,241,231,0.78);
+  }
+  @media (max-width:360px){
+    .card{ padding:34px 18px; }
+    .live-program{ padding:14px 14px; }
+    .live-program-main{ gap:10px; }
+    .live-program-time{ padding:5px 8px; font-size:13px; }
   }
 
   /* CO SI OBLÉCT */
@@ -1099,13 +1118,17 @@
   <div class="subtitle">Svatba</div>
 
   <div class="live-program is-upcoming" id="liveProgram" onclick="go('program')">
-    <div class="live-dot-wrap"><span class="live-dot"></span></div>
-    <div class="live-program-text">
-      <div class="live-program-label" id="liveProgramLabel">PRVNÍ NA PROGRAMU</div>
-      <div class="live-program-event" id="liveProgramEvent">PŘÍCHOD HOSTŮ</div>
-      <div class="live-program-next" id="liveProgramNext" style="display:none;"></div>
+    <div class="live-program-main">
+      <div class="live-dot-wrap"><span class="live-dot"></span></div>
+      <div class="live-program-text">
+        <div class="live-program-label" id="liveProgramLabel">PRVNÍ NA PROGRAMU</div>
+        <div class="live-program-event" id="liveProgramEvent">PŘÍCHOD HOSTŮ</div>
+      </div>
+      <div class="live-program-time" id="liveProgramTime">10:00</div>
     </div>
-    <div class="live-program-time" id="liveProgramTime">10:00</div>
+    <div class="live-program-next" id="liveProgramNext" style="display:none;">
+      <span class="next-label">Dále</span><span class="next-time" id="liveProgramNextTime"></span><span class="next-event" id="liveProgramNextEvent"></span>
+    </div>
   </div>
 
   <div class="nav-stack">
@@ -1160,155 +1183,17 @@
 <canvas id="shareCanvas" width="1080" height="1920" style="display:none;"></canvas>
 
 <script>
-    function go(id){
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view-' + id).classList.add('active');
-    window.scrollTo(0,0);
-  }
+  /* ---------- ZÁKLADNÍ ÚDAJE O SVATBĚ ----------
+     Jediné místo, kde se mění datum, čas obřadu a program.
+     Vše ostatní (odpočet, počasí, živý ukazatel, časová osa) se z toho počítá. */
+  const WEDDING_YEAR = 2026;
+  const WEDDING_MONTH_INDEX = 8; // září (0 = leden)
+  const WEDDING_DAY = 12;
+  const CEREMONY_HOUR = 11;
+  const CEREMONY_MINUTE = 0;
 
-  function updateCountdown(){
-
-    const weddingDate = new Date('2026-09-12T11:00:00');
-    const now = new Date();
-
-    const isWeddingDay =
-      now.getFullYear() === weddingDate.getFullYear() &&
-      now.getMonth() === weddingDate.getMonth() &&
-      now.getDate() === weddingDate.getDate();
-
-    const diffMs = weddingDate - now;
-    const el = document.getElementById('countdown');
-
-    if(!el) return;
-
-    if(diffMs <= 0){
-      el.innerHTML = `Ať žijí novomanželé!`;
-      return;
-    }
-    const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-    const label = days === 1 ? 'den' : (days >= 2 && days <= 4 ? 'dny' : 'dní');
-    el.innerHTML = `<span class="num">${days}</span>${label} do svatby`;
-  }
-  updateCountdown();
-async function updateWeather(){
-
-  const weddingDate = new Date('2026-09-12T11:00:00');
-  const now = new Date();
-
-  const isWeddingDay =
-    now.getFullYear() === weddingDate.getFullYear() &&
-    now.getMonth() === weddingDate.getMonth() &&
-    now.getDate() === weddingDate.getDate();
-
-  const diffDays = Math.ceil(
-    (weddingDate - now) /
-    (1000 * 60 * 60 * 24)
-  );
-  
-  const icon = document.getElementById('weatherIcon');
-  const info = document.getElementById('weatherInfo');
-  const temp = document.getElementById('weatherTemp');
-  const rain = document.getElementById('weatherRain');
-  const title = document.getElementById('weatherTitle');
-
-  // Více než 7 dní před svatbou
-  if(diffDays > 7){
-
-    title.innerHTML =
-      "Předpověď počasí v místě svatby";
-
-    icon.innerHTML = "🌤️";
-
-    info.innerHTML =
-      "Předpověď počasí<br>" +
-      "bude dostupná<br>" +
-      "7 dní před svatbou.";
-
-    return;
-}
-
-
-  // GPS souřadnice Sychrova
-  const latitude = 50.6471;
-  const longitude = 15.0731;
-
-
-  try{
-
-    const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weathercode,temperature_2m_max,precipitation_probability_max&timezone=Europe%2FPrague`
-    );
-
-    const data = await response.json();
-
-    if(isWeddingDay){
-
-  title.innerHTML =
-    "Aktuální počasí v místě svatby";
-
-}else{
-
-  title.innerHTML =
-    "Předpověď počasí v místě svatby";
-
-}
-    const temperature =
-      Math.round(data.daily.temperature_2m_max[0]);
-
-    const precipitation =
-      data.daily.precipitation_probability_max[0];
-
-    const code =
-      data.daily.weathercode[0];
-
-
-    icon.innerHTML = getWeatherIcon(code);
-
-    info.innerHTML = "";
-
-    temp.innerHTML =
-      temperature + " °C";
-
-    rain.innerHTML =
-      "💧 " + precipitation + " %";
-
-
-    info.appendChild(temp);
-    info.appendChild(rain);
-
-
-  }catch(error){
-
-    icon.innerHTML = "🌤️";
-
-    info.innerHTML =
-      "Předpověď počasí<br>" +
-      "není momentálně dostupná.";
-
-  }
-
-}
-
-
-
-function getWeatherIcon(code){
-
-  if(code === 0)
-    return "☀️";
-
-  if(code <= 3)
-    return "🌤️";
-
-  if(code <= 67)
-    return "🌧️";
-
-  return "⛈️";
-
-}
-  
-  updateWeather();
-
-  function showSurprise(from){ go('surprise-' + from); }
+  // Do kdy se ještě zobrazuje "živý" program (svatební noc přesahuje půlnoc)
+  const PROGRAM_END_HOUR = 4; // 4:00 následujícího dne
 
   /* ---------- SPOLEČNÝ PROGRAM ----------
      Jediný zdroj pravdy pro časy a názvy bodů programu.
@@ -1324,11 +1209,173 @@ function getWeatherIcon(code){
     {time:"19:00", label:"PRVNÍ TANEC A OTEVŘENÍ PARKETU"}
   ];
 
-  // Datum svatby - používá se pro výpočet, zda je daný bod programu už "aktuální" nebo ještě "nadcházející"
-  const WEDDING_YEAR = 2026;
-  const WEDDING_MONTH_INDEX = 8; // září (0 = leden)
-  const WEDDING_DAY = 12;
+  function pad2(n){ return String(n).padStart(2,'0'); }
 
+  const WEDDING_ISO_DATE =
+    `${WEDDING_YEAR}-${pad2(WEDDING_MONTH_INDEX + 1)}-${pad2(WEDDING_DAY)}`;
+
+  function ceremonyDateTime(){
+    return new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY, CEREMONY_HOUR, CEREMONY_MINUTE, 0, 0);
+  }
+
+  // Konec svatebního dne = 4:00 následujícího dne
+  function programEndDateTime(){
+    return new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY + 1, PROGRAM_END_HOUR, 0, 0, 0);
+  }
+
+  /* Počet celých dní mezi dneškem a dnem svatby.
+     Počítá se z půlnocí, takže výsledek nezávisí na denní době
+     ani na letním/zimním čase. 0 = dnes je svatba, záporné = už proběhla. */
+  function daysUntilWedding(now){
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const wedding = new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY);
+    return Math.round((wedding - today) / 86400000);
+  }
+
+  function go(id){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + id).classList.add('active');
+    window.scrollTo(0,0);
+    if(id === 'na'){
+      updateLiveProgram();
+    }
+  }
+
+  /* ---------- ODPOČET ---------- */
+  function updateCountdown(){
+    const el = document.getElementById('countdown');
+    if(!el) return;
+
+    const now = new Date();
+    const days = daysUntilWedding(now);
+
+    if(days > 0){
+      const label = days === 1 ? 'den' : (days <= 4 ? 'dny' : 'dní');
+      el.innerHTML = `<span class="num">${days}</span>${label} do svatby`;
+      return;
+    }
+
+    if(days === 0){
+      // svatební den
+      if(now < ceremonyDateTime()){
+        el.innerHTML = 'Dnes je ten den!';
+      }else{
+        el.innerHTML = 'Ať žijí novomanželé!';
+      }
+      return;
+    }
+
+    el.innerHTML = 'Ať žijí novomanželé!';
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  /* ---------- POČASÍ ---------- */
+  async function updateWeather(){
+
+    const now = new Date();
+    const days = daysUntilWedding(now);
+    const isWeddingDay = days === 0;
+
+    const icon  = document.getElementById('weatherIcon');
+    const info  = document.getElementById('weatherInfo');
+    const temp  = document.getElementById('weatherTemp');
+    const rain  = document.getElementById('weatherRain');
+    const title = document.getElementById('weatherTitle');
+
+    temp.innerHTML = '';
+    rain.innerHTML = '';
+
+    // Svatba už proběhla
+    if(days < 0){
+      title.innerHTML = 'Počasí v místě svatby';
+      icon.innerHTML = '💛';
+      info.innerHTML = 'Děkujeme, že jste<br>byli s námi.';
+      return;
+    }
+
+    // Více než 7 dní před svatbou — předpověď ještě není k dispozici
+    if(days > 7){
+      title.innerHTML = 'Předpověď počasí v místě svatby';
+      icon.innerHTML = '🌤️';
+      info.innerHTML =
+        'Předpověď počasí<br>' +
+        'bude dostupná<br>' +
+        '7 dní před svatbou.';
+      return;
+    }
+
+    // GPS souřadnice Sychrova
+    const latitude = 50.6471;
+    const longitude = 15.0731;
+
+    title.innerHTML = isWeddingDay
+      ? 'Aktuální počasí v místě svatby'
+      : 'Předpověď počasí v místě svatby';
+
+    try{
+      // Předpověď se vyžádá přesně na den svatby (ne na dnešek).
+      let url =
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}` +
+        `&daily=weather_code,temperature_2m_max,precipitation_probability_max` +
+        `&start_date=${WEDDING_ISO_DATE}&end_date=${WEDDING_ISO_DATE}` +
+        `&timezone=Europe%2FPrague`;
+
+      // V den svatby zobrazíme skutečnou aktuální teplotu
+      if(isWeddingDay){
+        url += '&current=temperature_2m,weather_code';
+      }
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const daily = data.daily || {};
+      const dailyTemp = daily.temperature_2m_max ? daily.temperature_2m_max[0] : null;
+      const dailyCode = daily.weather_code ? daily.weather_code[0] : null;
+      const precipitation = daily.precipitation_probability_max ? daily.precipitation_probability_max[0] : null;
+
+      const useCurrent = isWeddingDay && data.current && data.current.temperature_2m !== undefined;
+      const temperature = useCurrent ? data.current.temperature_2m : dailyTemp;
+      const code = useCurrent ? data.current.weather_code : dailyCode;
+
+      if(temperature === null || temperature === undefined){
+        icon.innerHTML = '🌤️';
+        info.innerHTML =
+          'Předpověď počasí<br>' +
+          'zatím není dostupná.';
+        return;
+      }
+
+      icon.innerHTML = getWeatherIcon(code);
+      info.innerHTML = '';
+      temp.innerHTML = Math.round(temperature) + ' °C';
+
+      if(precipitation !== null && precipitation !== undefined){
+        rain.innerHTML = '💧 ' + precipitation + ' %';
+      }
+
+    }catch(error){
+      icon.innerHTML = '🌤️';
+      info.innerHTML =
+        'Předpověď počasí<br>' +
+        'není momentálně dostupná.';
+    }
+  }
+
+  function getWeatherIcon(code){
+    if(code === 0) return '☀️';
+    if(code <= 3) return '🌤️';
+    if(code <= 67) return '🌧️';
+    return '⛈️';
+  }
+
+  updateWeather();
+  // Během svatebního dne se počasí obnoví každých 15 minut
+  setInterval(updateWeather, 15 * 60 * 1000);
+
+  function showSurprise(from){ go('surprise-' + from); }
+
+  /* ---------- ČASOVÁ OSA (Před svatbou → Program) ---------- */
   function renderProgramTimeline(){
     const container = document.getElementById('programTimeline');
     if(!container) return;
@@ -1346,16 +1393,40 @@ function getWeatherIcon(code){
     return new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY, h, m, 0, 0);
   }
 
+  /* ---------- ŽIVÝ UKAZATEL PROGRAMU ---------- */
+  function setNextProgram(item){
+    const nextEl = document.getElementById('liveProgramNext');
+    if(!item){
+      nextEl.style.display = 'none';
+      return;
+    }
+    document.getElementById('liveProgramNextTime').textContent = item.time;
+    document.getElementById('liveProgramNextEvent').textContent = item.label;
+    nextEl.style.display = 'block';
+    fitLiveProgramNext();
+  }
+
   function updateLiveProgram(){
     const el = document.getElementById('liveProgram');
     if(!el) return;
 
     const labelEl = document.getElementById('liveProgramLabel');
     const eventEl = document.getElementById('liveProgramEvent');
-    const timeEl = document.getElementById('liveProgramTime');
-    const nextEl = document.getElementById('liveProgramNext');
+    const timeEl  = document.getElementById('liveProgramTime');
 
     const now = new Date();
+
+    // Svatba už definitivně skončila
+    if(now >= programEndDateTime()){
+      el.classList.add('is-upcoming');
+      labelEl.textContent = 'PROGRAM SKONČIL';
+      eventEl.textContent = 'DĚKUJEME, ŽE JSTE BYLI S NÁMI';
+      timeEl.style.display = 'none';
+      setNextProgram(null);
+      return;
+    }
+
+    timeEl.style.display = '';
 
     // najdi poslední bod programu, který už podle skutečného data a času nastal
     let currentIndex = -1;
@@ -1370,33 +1441,41 @@ function getWeatherIcon(code){
       el.classList.add('is-upcoming');
       labelEl.textContent = 'PRVNÍ NA PROGRAMU';
       eventEl.textContent = weddingProgram[0].label;
-      timeEl.textContent = weddingProgram[0].time;
-
-      const upcomingNext = weddingProgram[1];
-      if(upcomingNext){
-        nextEl.innerHTML = `<span class="next-label">Nadcházející</span><span class="next-time">${upcomingNext.time}</span><span class="next-event">${upcomingNext.label}</span>`;
-        nextEl.style.display = 'block';
-      }else{
-        nextEl.style.display = 'none';
-      }
+      timeEl.textContent  = weddingProgram[0].time;
+      setNextProgram(weddingProgram[1]);
     }else{
       el.classList.remove('is-upcoming');
       labelEl.textContent = 'PRÁVĚ PROBÍHÁ';
       eventEl.textContent = weddingProgram[currentIndex].label;
-      timeEl.textContent = weddingProgram[currentIndex].time;
-
-      const next = weddingProgram[currentIndex + 1];
-      if(next){
-        nextEl.innerHTML = `<span class="next-label">Nadcházející</span><span class="next-time">${next.time}</span><span class="next-event">${next.label}</span>`;
-        nextEl.style.display = 'block';
-      }else{
-        // poslední bod programu už proběhl - žádný další bod nenásleduje
-        nextEl.style.display = 'none';
-      }
+      timeEl.textContent  = weddingProgram[currentIndex].time;
+      setNextProgram(weddingProgram[currentIndex + 1]);
     }
   }
+
+  /* Zmenší písmo řádku "Dále", pokud by se text nevešel na jeden řádek.
+     Díky tomu se nikdy nezalomí ani na úzkých displejích. */
+  function fitLiveProgramNext(){
+    const el = document.getElementById('liveProgramNext');
+    if(!el || el.style.display === 'none') return;
+    if(!el.clientWidth) return; // prvek je skrytý -> nemá smysl měřit
+
+    const MAX = 11, MIN = 8.5, STEP = 0.25;
+    let size = MAX;
+    el.style.fontSize = size + 'px';
+
+    while(el.scrollWidth > el.clientWidth && size > MIN){
+      size -= STEP;
+      el.style.fontSize = size + 'px';
+    }
+  }
+
   updateLiveProgram();
   setInterval(updateLiveProgram, 30000);
+  window.addEventListener('resize', fitLiveProgramNext);
+  window.addEventListener('orientationchange', fitLiveProgramNext);
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(fitLiveProgramNext);
+  }
 
   /* ---------- SCROLL NAHORU ---------- */
   const scrollBtn = document.getElementById('scrollTopBtn');
