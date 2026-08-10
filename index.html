@@ -1169,7 +1169,7 @@
   <!-- KUDY NA SVATBU -->
 <div class="view" id="view-kudy">
 
-  <button class="backbtn" onclick="go('pred')">← Zpět</button>
+  <button class="backbtn" onclick="goBackFromProgram()">← Zpět</button>
 
   <div class="subtitle">Kudy na svatbu</div>
 
@@ -1429,8 +1429,8 @@
   <div class="live-program is-upcoming" id="liveProgram"
        role="button" tabindex="0"
        aria-label="Zobrazit celý program"
-       onclick="go('program')"
-       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();go('program');}">
+       onclick="go('program','na')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();go('program','na');}"
     <div class="live-program-main">
       <div class="live-dot-wrap"><span class="live-dot"></span></div>
       <div class="live-program-text">
@@ -1546,14 +1546,25 @@
     return Math.round((wedding - today) / 86400000);
   }
 
-  function go(id){
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view-' + id).classList.add('active');
-    window.scrollTo(0,0);
-    if(id === 'na'){
-      updateLiveProgram();
-    }
+  let programBackView = 'pred';
+
+function go(id, from){
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  window.scrollTo(0,0);
+
+  if(id === 'program'){
+    programBackView = from || 'pred';
   }
+
+  if(id === 'na'){
+    updateLiveProgram();
+  }
+}
+
+function goBackFromProgram(){
+  go(programBackView);
+}
 
   /* ---------- ODPOČET ---------- */
   function updateCountdown(){
