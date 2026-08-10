@@ -886,11 +886,77 @@
 }
 /* NÁPOJOVÝ LÍSTEK */
 
+  /* NÁPOJOVÝ LÍSTEK */
+
   .drinks{
     width:100%;
     display:flex;
     flex-direction:column;
-    gap:20px;
+    gap:28px;
+  }
+
+  .drink-accordion{
+    width:100%;
+    margin-bottom:18px;
+  }
+
+  .drink-accordion-header{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 16px;
+
+    background:rgba(255,255,255,0.45);
+
+    border:1.5px solid var(--card-border);
+    border-radius:10px;
+
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:16px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink);
+
+    cursor:pointer;
+    text-align:left;
+
+    box-shadow:
+      0 0 20px rgba(255,255,255,0.9),
+      0 0 35px rgba(255,255,255,0.55);
+
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  .drink-accordion-header:active{
+    background:var(--tan-fill);
+    border-color:var(--tan);
+  }
+
+  .drink-accordion-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .drink-accordion-arrow{
+    font-size:18px;
+    color:var(--tan);
+    transition:transform 0.2s ease;
+  }
+
+  .drink-accordion.open .drink-accordion-arrow{
+    transform:rotate(180deg);
+  }
+
+  .drink-accordion-content{
+    display:none;
+    margin-top:14px;
+  }
+
+  .drink-accordion.open .drink-accordion-content{
+    display:block;
   }
 
   .drink-group{
@@ -1285,8 +1351,7 @@
 </div>
 
 
-
-<!-- NÁPOJOVÝ LÍSTEK — rozcestník -->
+<!-- NÁPOJOVÝ LÍSTEK -->
 <div class="view" id="view-napoje">
 
   <button class="backbtn" onclick="go('na')">← Zpět</button>
@@ -1298,16 +1363,50 @@
     Kdyby vám něco chybělo, stačí říct u baru.
   </div>
 
-  <div class="nav-stack">
+  <!-- ALKO -->
+  <div class="drink-accordion" id="drinkAccordionAlko">
 
-    <button class="nav-btn" onclick="go('napoje-alko')">
-      Alko
+    <button class="drink-accordion-header"
+            onclick="toggleDrinkSection('drinkAccordionAlko')">
+
+      <span class="drink-accordion-title">
+        <span class="drink-dot" style="background:var(--g)"></span>
+        <span>Alko</span>
+      </span>
+
+      <span class="drink-accordion-arrow">▼</span>
+
     </button>
 
-    <button class="nav-btn" onclick="go('napoje-nealko')">
-      Nealko
+    <div class="drink-accordion-content">
+      <div class="drinks" id="drinkMenuAlko">
+        <!-- generuje se automaticky z pole drinkMenuAlko v <script> -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NEALKO -->
+  <div class="drink-accordion" id="drinkAccordionNealko">
+
+    <button class="drink-accordion-header"
+            onclick="toggleDrinkSection('drinkAccordionNealko')">
+
+      <span class="drink-accordion-title">
+        <span class="drink-dot" style="background:var(--bl)"></span>
+        <span>Nealko</span>
+      </span>
+
+      <span class="drink-accordion-arrow">▼</span>
+
     </button>
 
+    <div class="drink-accordion-content">
+      <div class="drinks" id="drinkMenuNealko">
+        <!-- generuje se automaticky z pole drinkMenuNealko v <script> -->
+      </div>
+    </div>
+
   </div>
 
   <footer class="mini">
@@ -1316,39 +1415,6 @@
 
 </div>
 
-<!-- NÁPOJOVÝ LÍSTEK — ALKO -->
-<div class="view" id="view-napoje-alko">
-
-  <button class="backbtn" onclick="go('napoje')">← Zpět</button>
-
-  <div class="subtitle">Alko</div>
-
-  <div class="drinks" id="drinkMenuAlko">
-    <!-- generuje se automaticky z pole drinkMenuAlko v <script> -->
-  </div>
-
-  <footer class="mini">
-    Tereza &amp; Ondřej — 2026
-  </footer>
-
-</div>
-
-<!-- NÁPOJOVÝ LÍSTEK — NEALKO -->
-<div class="view" id="view-napoje-nealko">
-
-  <button class="backbtn" onclick="go('napoje')">← Zpět</button>
-
-  <div class="subtitle">Nealko</div>
-
-  <div class="drinks" id="drinkMenuNealko">
-    <!-- generuje se automaticky z pole drinkMenuNealko v <script> -->
-  </div>
-
-  <footer class="mini">
-    Tereza &amp; Ondřej — 2026
-  </footer>
-
-</div>
 
   <!-- NA SVATBĚ -->
 <div class="view" id="view-na">
@@ -1709,7 +1775,14 @@
     `).join('');
   }
   renderDrinkMenu('drinkMenuAlko', drinkMenuAlko);
+
   renderDrinkMenu('drinkMenuNealko', drinkMenuNealko);
+  function toggleDrinkSection(id){
+    const section = document.getElementById(id);
+    if(!section) return;
+
+    section.classList.toggle('open');
+  }
   function programItemDateTime(item){
     const [h, m] = item.time.split(':').map(Number);
     return new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY, h, m, 0, 0);
