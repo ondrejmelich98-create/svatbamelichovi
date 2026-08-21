@@ -714,6 +714,9 @@
     text-transform:uppercase;
     color:var(--tan-soft);
     margin-bottom:3px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
   .live-program-event{
   font-family:'Fraunces', serif;
@@ -722,6 +725,9 @@
   color:var(--paper);
   line-height:1.15;
   white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:block;
 }
   .live-program-time{
     flex:0 0 auto;
@@ -732,6 +738,7 @@
     background:rgba(255,255,255,0.14);
     padding:6px 10px;
     border-radius:8px;
+    white-space:nowrap;
   }
   /* Šipka naznačuje, že se panelem dá proklikat na celý program */
   .live-program-chevron{
@@ -1162,7 +1169,7 @@
     <div class="nav-stack">
       <button class="nav-btn" onclick="go('kudy')">Kudy na svatbu</button>
       <button class="nav-btn" onclick="go('obleceni')">Co si obléct</button>
-      <button class="nav-btn" onclick="go('program')">Program</button>
+      <button class="nav-btn" onclick="openProgram('pred')">Program</button>
     </div>
     <footer class="mini">Tereza &amp; Ondřej — 2026</footer>
   </div>
@@ -1249,7 +1256,7 @@
 <!-- PROGRAM -->
 <div class="view" id="view-program">
 
-  <button class="backbtn" onclick="go('pred')">← Zpět</button>
+  <button class="backbtn" onclick="go(programReturnTo)">← Zpět</button>
 
 <div class="subtitle">Program</div>
 
@@ -1428,8 +1435,8 @@
   <div class="live-program is-upcoming" id="liveProgram"
        role="button" tabindex="0"
        aria-label="Zobrazit celý program"
-       onclick="go('program')"
-       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();go('program');}">
+       onclick="openProgram('na')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProgram('na');}">
     <div class="live-program-main">
       <div class="live-dot-wrap"><span class="live-dot"></span></div>
       <div class="live-program-text">
@@ -1544,6 +1551,15 @@
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const wedding = new Date(WEDDING_YEAR, WEDDING_MONTH_INDEX, WEDDING_DAY);
     return Math.round((wedding - today) / 86400000);
+  }
+
+  /* Odkud uživatel přišel na stránku "Program" — díky tomu tlačítko
+     "Zpět" vrátí zpátky do "Před svatbou", nebo do "Svatba", podle toho,
+     odkud byl vstup proveden. */
+  let programReturnTo = 'pred';
+  function openProgram(from){
+    programReturnTo = from;
+    go('program');
   }
 
   function go(id){
@@ -1822,6 +1838,7 @@
       eventEl.textContent = 'DĚKUJEME, ŽE JSTE BYLI S NÁMI';
       timeEl.style.display = 'none';
       setNextProgram(null);
+      fitLiveProgramEvent();
       return;
     }
 
@@ -1849,6 +1866,8 @@
       timeEl.textContent  = weddingProgram[currentIndex].time;
       setNextProgram(weddingProgram[currentIndex + 1]);
     }
+
+    fitLiveProgramEvent();
   }
 
   /* Zmenší písmo řádku "Dále", pokud by se text nevešel na jeden řádek.
@@ -1868,12 +1887,40 @@
     }
   }
 
+  /* Totéž pro hlavní řádek (název aktuálního bodu programu) — u delších
+     názvů (např. "PRVNÍ TANEC A OTEVŘENÍ PARKETU") se písmo zmenší tak,
+     aby se vešlo na jeden řádek vedle času a šipky, místo aby přeteklo
+     nebo opticky "zalomilo" widget na dva řádky. */
+  function fitLiveProgramEvent(){
+    const el = document.getElementById('liveProgramEvent');
+    if(!el) return;
+    if(!el.clientWidth) return; // prvek je skrytý -> nemá smysl měřit
+
+    const MAX = 15, MIN = 11, STEP = 0.25;
+    let size = MAX;
+    el.style.fontSize = size + 'px';
+
+    while(el.scrollWidth > el.clientWidth && size > MIN){
+      size -= STEP;
+      el.style.fontSize = size + 'px';
+    }
+  }
+
   updateLiveProgram();
   setInterval(updateLiveProgram, 30000);
-  window.addEventListener('resize', fitLiveProgramNext);
-  window.addEventListener('orientationchange', fitLiveProgramNext);
+  window.addEventListener('resize', function(){
+    fitLiveProgramNext();
+    fitLiveProgramEvent();
+  });
+  window.addEventListener('orientationchange', function(){
+    fitLiveProgramNext();
+    fitLiveProgramEvent();
+  });
   if(document.fonts && document.fonts.ready){
-    document.fonts.ready.then(fitLiveProgramNext);
+    document.fonts.ready.then(function(){
+      fitLiveProgramNext();
+      fitLiveProgramEvent();
+    });
   }
 
   /* ---------- SCROLL NAHORU ---------- */
