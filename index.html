@@ -2001,11 +2001,11 @@ function submitQuiz(){
   }
 
   function scoreMessage(percent){
-    if(percent <= 25) return "Tohle bylo teprve seznamovací kolo — novomanželé vám rádi doplní zbytek u svatební tabule.";
-    if(percent <= 50) return "Základ máte pevný, pár detailů vám ještě chybí.";
-    if(percent <= 75) return "Znáte novomanžele opravdu dobře!";
-    if(percent <= 90) return "Novomanželé jsou vám velmi blízcí.";
-    return "Je vůbec něco, co o nich nevíte?";
+    if(percent <= 25) return "Tohle bylo teprve seznamovací kolo. Nevadí, teď už víte, že pokud nás chcete skutečně znát, budete muset občas přijít na návštěvu.";
+    if(percent <= 50) return "Jenom půlka? Máte dobrý základ, teď už jen trochu zapracovat na detailech.";
+    if(percent <= 75) return "Klobouk dolu! Většinu už o nás víte, stačí už jen pár drobností. Zeptejte se.";
+    if(percent <= 90) return "Téměř dokonalost! To už nás znáte možná až podezřele dobře.";
+    return "Gratulujeme, máte oficiální licenci nám radit do manželství! <span>😀</span>";
   }
 
 function renderResult(percent, wrongTopics){
